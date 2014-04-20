@@ -19,6 +19,8 @@ int main(){
 	std::ofstream file;
 	file.open("task2.dat");
 
+	//Compute unit Gaussian distribution (sigma = 1).
+	//maxpx = 1/sqrt(2*pi).
 	double maxpx=gsl_ran_ugaussian_pdf(0);
 
 	for(int i=0;i<n;i++){
