@@ -1,6 +1,8 @@
 \documentclass[]{article}
 \usepackage{amsmath}
 \usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{graphicx}
 
 \title{Practical Lab Numerical Computing Computational Finance \\Bachelor-Worksheet 1}
 \author{Lukas Troska, Ilja Kalmykov}
@@ -23,7 +25,7 @@ double gsl\_ran\_gaussian(const gsl\_rng* r, double sigma), which returns a
 gaussian random variable with mean 0 and variance sigma.
 
 \section*{Task 2}
-For code see task2.cpp.
+For code see WS1T32.cpp.
 
 \section*{Task 3} The matlab script plots the data against a unit gaussian
 probability density function. It first creates a histogram of the data, where it
@@ -34,7 +36,7 @@ function.
 
 The problem in fig. 1 is that $[-2,2]$ is not a good enough bound since the
 integral comes out to $\approx 0.95$, thus we get a lot more variables where
-$y\le p(x')$ (since it its more likely for an element of $[-2,2]$ then say
+$y\le p(x')$ (since it is more likely for an element of $[-2,2]$ then say
 $[-3,3]$ to fullfill that), and thus the simulated density has a higher mean
 than it should be.
 
@@ -43,8 +45,9 @@ inverse of the cdf of the gaussian to the uniform random variable.
 
 \begin{proof}
 Let U be a standard uniform random variable, F like in the problem. Then
-$P[X<=x]=P[F^{-1}(U)<=x]=P[U<=F(x)]=F(x)$ (2nd equality holds because F is
-right-continuous, 3rd equality holds because U is uniform on [0,1])
+$P\left[X\le x\right]=P\left[F^{-1}(U) \le x\right]=P\left[U \le
+F(x)\right]=F(x)$ (2nd equality holds because F is right-continuous, 3rd
+equality holds because U is uniform on [0,1])
 \end{proof}
 
 Intuitively this is clear, too: We uniformly choose a number between 0 and 1 and
@@ -63,7 +66,7 @@ it behaves almost like a polynomial in that area. For the last case the values
 of the cdf are very close to 1, and again like above the given term gives us a
 good approximation of the difference of the cdf's value to 1 in that area.
 
-\section*{Task 6} For code see task6.cpp and task6.plot for gnuplot script.
+\section*{Task 6} For code see WS1T36.cpp and WS1T36.plot for gnuplot script.
 
 \section*{Task 7} Let $g_1(u_1,u_2)=\sqrt{-2\log(u_1)}\cos(2\pi
 u_2),g_2(u_1,u_2)=\sqrt{-2\log(u_1)}\sin(2\pi u_2)$ be the transformation
@@ -77,21 +80,61 @@ We see that $z_1,z_2$ are independent and standard normally distributed.
 
 \section*{Task 8} The advantage of this algorithm is that it is more precise, we
 don't have a lot of floating point errors. The variable alpha in the algorithm
-is the estimated mean. It is the same as the naive computation because: Let
-$x_n$ be the n-th value, $\hat{x}_n$ be the n-th estimated mean value. Obviously
-$\hat{x}_0=x_0$ so the initialization is correct. The computation is correct,
-too, since in the terms above we have for the variables in the algorithm:
-$gamma=x_n-\hat{x}_{n-1}$, $alpha=x_{n-1}$ where $n=i+1$, so we have
-$alpha=alpha+gamma/(i+1)=\hat{x}_{n-1}+(x_n-\hat{x}_{n-1})/n=((n-1)\hat{x}_{n-1}+x_n)/n=(x_1+...+x_2)/n$.
+is the estimated mean. It is the same as the naive computation because: 
+\begin{eqnarray}
+    \hat{\mu}_n &= &\frac{1}{N}\sum_{i=1}^n x_i\nonumber\\
+    &=&\frac{1}{N}\sum_{i=1}^{n-1}x_i+\frac{1}{N}x_n\nonumber\\
+    &=&\frac{\hat{\mu}_{n-1}\left(N-1\right)+x_n}{N}\label{eqn:meanAlg}
+\end{eqnarray}
+
+and
+\begin{eqnarray}
+    \hat{\sigma}^{2}_n\left(N-1\right) &= &\sum_{i=1}^n
+    \left(x_i-\mu\right)^2\nonumber\\
+    &=&\sum_{i=1}^{n-1}\left(x_i-\mu\right)^2
+    +\left(x_n-\mu\right)^2\nonumber\\
+    &=&\left(N-2\right)\hat{\sigma}^{2}_{n-1} +
+    \left(x_n-\mu\right)^2\label{eqn:varAlg}
+\end{eqnarray}
+
+Let $x_n$ be the n-th value, $\hat{\mu}_n$ and $\hat{\sigma}_n$ be the n-th
+estimated mean value and variance.  For the variables in the
+algorithm we have:
+\[\gamma=x_n-\hat{\mu}_{n-1},\quad \alpha=\hat{\mu}_{n-1},\quad \beta = \beta +
+\gamma^2\frac{n-1}{n},\quad \sigma = \sqrt{\frac{\beta}{n-1}} =
+\hat{\sigma}_{n}\]
+
+where $n=i+1$. Obviously $\hat{\mu}_0=x_0$ and $\hat{\sigma}_0 = 0$ so the initialization is
+correct. The computation is correct, too, since in the terms above and, with
+(\ref{eqn:meanAlg}) and (\ref{eqn:varAlg}), we have
+\begin{eqnarray*}
+      \alpha & = &\alpha+\gamma/(i+1) \\
+      & = &\hat{\mu}_{n-1}+(x_n-\hat{\mu}_{n-1})/n \\
+      & = &((n-1)\hat{\mu}_{n-1}+x_n)/n \\
+      & = &(x_1+...+x_n)/n = \hat{\mu}_{n}
+\end{eqnarray*} 
+
+\begin{eqnarray*}
+      \sigma^2 \left(n-1\right) & = & \beta \\
+      & = & \beta + \gamma^2\frac{n-1}{n}\\
+      & = & \hat{\sigma}^{2}_n\left(n-1\right) + \gamma^2\frac{n-1}{n}\\
+      & = & \left(\frac{\hat{\sigma}^{2}_n n+\gamma^2}{n}\right)\left(n-1\right)
+      \\
+      & = & \hat{\sigma}^{2}_{n+1}\left(n-1\right)
+\end{eqnarray*} 
+
 This shows that it yields the same result.
 
-!!!!!ADD VARIANCE CORRECT RESULT!!!!!
-
 \section*{Task 9}
-For code see task9.cpp and task9.plot for gnuplot script.
-!!!!!ADD WHAT DOES PLOT MEAN!!!!!
+For code see WS1T49.cpp and WS1T49.plot for gnuplot script.
+%\input{WS1T49a.tex}
+%\input{WS1T49b.tex}
+Due to the plots the error functions for $\hat{\sigma}$ and $\hat{\mu}$
+$error(N) = \left|\sigma_n - \sigma\right| $ and $error(N) = \left|\mu_n -
+\mu\right| $ are approximately given by $error(N) \approx c\,N^{-\frac{1}{2}}$.
 
-\section*{Task 10} For code see task10.cpp and task10.plot for gnuplot script.
+
+\section*{Task 10} For code see WS1T510.cpp and WS1T510.plot for gnuplot script.
 The paths look more or less the same, also the mean pricechange is ineed +10
 \%/year.
 \end{document}
