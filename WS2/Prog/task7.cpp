@@ -11,6 +11,7 @@ double f (double x, void * params) {
 
 int main ()
 {
+	//level
 	int l=2;
   	gsl_integration_glfixed_table * t = gsl_integration_glfixed_table_alloc(pow(2,l)-1);//intervals
   

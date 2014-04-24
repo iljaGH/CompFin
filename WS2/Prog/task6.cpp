@@ -26,5 +26,6 @@ void trapezoidal(int l){
 }
 
 int main(){
-	trapezoidal(10);
+	int level=10;
+	trapezoidal(level);
 }

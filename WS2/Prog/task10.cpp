@@ -115,6 +115,7 @@ double montecarlo(int l, void * p){
 int main(){
 	std::ofstream file;
 
+	int maxlevel=10;
 	//K=0
 	file.open("task10_0.dat");
 	file << "K=0 #t monte-carlo trapezoidal clenshaw-curtis gauss-legendre\n";
@@ -122,7 +123,7 @@ int main(){
 	struct my_f_params params = {10,0,2,0.1,0.2};
 	double expected=12.21402758160169833921071994639;
 
-	for(int l=1;l<10;l++)
+	for(int l=1;l<=maxlevel;l++)
 	{
 		//Gauss-Legendre
 		gsl_integration_glfixed_table * t = gsl_integration_glfixed_table_alloc(pow(2,l)-1);//intervals
@@ -144,7 +145,7 @@ int main(){
 
 	expected=2.652809490034880944992448389588518;
 
-	for(int l=1;l<10;l++)
+	for(int l=1;l<=maxlevel;l++)
 	{
 		//Gauss-Legendre
 		gsl_integration_glfixed_table * t = gsl_integration_glfixed_table_alloc(pow(2,l)-1);//intervals

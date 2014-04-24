@@ -34,5 +34,6 @@ void cc(int l){
 }
 
 int main(){
-	cc(4);
+	int level=4;
+	cc(level);
 }
