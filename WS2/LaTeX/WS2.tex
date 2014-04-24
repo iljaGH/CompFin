@@ -26,21 +26,23 @@ deltat=2.000000,mean=3.098824,variance=3.780594
 
 
 \section*{Task 3}
+!!!STILL TO PROVE!!!
 
 \section*{Task 4}
-See task4.cpp and task4.plot for code. The rate of convergence
+See task4.cpp and task4.plot for code. The rate of convergence !!?!?!?!?!?!?
 
 
 \section*{Task 5}
+This formula is just a transformation. We have $\Phi(x)=\dfrac{1}{\sqrt{(2\pi)}}\int_{-\infty}^\infty exp({-\dfrac{t^2}{2}})dt$ and thus $\Phi'(x)=\dfrac{1}{\sqrt{(2\pi)}}\exp({-\dfrac{t^2}{2}})$. Applying the transformation $\Phi$ to $\int_0^1f(\Phi^{-1}(t))dt$ and using integration by substitution gives us: $\int_0^1f(\Phi^{-1}(t))dt=\int_{\Phi(0)}^{\Phi(1)}(\Phi(\Phi^{-1}(t)))\Phi'(t)dt=\int_{-\infty}^{\infty}f(s)\Phi'(s)ds=\int_{-\infty}^{\infty}f(s)\dfrac{1}{\sqrt{(2\pi)}}\exp({-\dfrac{s^2}{2}})ds=\dfrac{1}{\sqrt{(2\pi)}}\int_{-\infty}^{\infty}f(s)\exp({-\dfrac{s^2}{2}})ds$.
 
 \section*{Task 6}
 See task6.cpp for code. There is a relationship: You get the nodes on level $(l+1)$ by taking the nodes on level $l$ and putting a new node equidistant between two old nodes and also putting a new node equidistantly between $0$ and the first old node, or $1$ and the last old node respectively.
 
 \section*{Task 7}
-See task7.cpp for code. We used GSL for Gauss-Legendre quadrature. !!ADD theory+relationship of nodes!!
+See task7.cpp for code. We used GSL for Gauss-Legendre quadrature. !!ADD relationship of nodes!!
 
 \section*{Task 8}
-See task8.cpp for code. Yes, there is a relationship: on level $l+1$, we have the nodes from level $l$, and inbetween each "old" node we add a new node at distance !!FIND FORMULA FOR DISTANCE!!
+See task8.cpp for code. Yes, there is a relationship: on level $l+1$, we have the nodes from level $l$, and inbetween each "old" node we add a new node as follows: if on level $l$ we have nodes $x_i,x_{i+1}$ at $\dfrac{1}{2}(1-\cos(\dfrac{\pi i}{N_l+1}))$ and $\dfrac{1}{2}(1-\cos(\dfrac{\pi(i+1)}{N_l+1}))$ respectively, then on level $l+1$ they are node $x_{2i}$ and $x_{2i+2}$ respectively, since $\dfrac{i}{N_l+1}=\dfrac{2i}{N_{l+1}+1}$ (for $i+1$ analogously). We basically add nodes  $x_{i+0.5}$ for $0\le i \le N_l$.
 
 \section*{Task 9}
 See task9.cpp and task9.plot. !!not sure if we have to plot error against level or $N_j$?"!!
