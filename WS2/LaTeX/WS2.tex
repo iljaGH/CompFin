@@ -1,0 +1,51 @@
+\documentclass[]{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{listings}
+
+\title{Practical Lab Numerical Computing Computational Finance \\Bachelor-Worksheet 2}
+\author{Lukas Troska, Ilja Kalmykov}
+\date{}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\maketitle
+\section*{Task 1}
+See task1.cpp and task1.plot.
+
+\section*{Task 2}
+See task2.cpp for code. As we can see in the sample output below, the variance does not depend on $\Delta t$, since the small differences can be accounted for by the (relatively) small sample size of N=1000 geometric brownian motions.
+\begin{lstlisting}[frame=single] 
+deltat=0.200000,mean=3.190125,variance=3.887499
+deltat=0.400000,mean=3.150493,variance=3.843603
+deltat=0.500000,mean=2.946877,variance=3.814984
+deltat=1.000000,mean=2.908374,variance=3.782305
+deltat=2.000000,mean=3.098824,variance=3.780594
+\end{lstlisting}
+
+
+\section*{Task 3}
+
+\section*{Task 4}
+See task4.cpp and task4.plot for code. The rate of convergence
+
+
+\section*{Task 5}
+
+\section*{Task 6}
+See task6.cpp for code. There is a relationship: You get the nodes on level $(l+1)$ by taking the nodes on level $l$ and putting a new node equidistant between two old nodes and also putting a new node equidistantly between $0$ and the first old node, or $1$ and the last old node respectively.
+
+\section*{Task 7}
+See task7.cpp for code. We used GSL for Gauss-Legendre quadrature. !!ADD theory+relationship of nodes!!
+
+\section*{Task 8}
+See task8.cpp for code. Yes, there is a relationship: on level $l+1$, we have the nodes from level $l$, and inbetween each "old" node we add a new node at distance !!FIND FORMULA FOR DISTANCE!!
+
+\section*{Task 9}
+See task9.cpp and task9.plot. !!not sure if we have to plot error against level or $N_j$?"!!
+
+\section*{Task 10}
+Plugging in the usual values $S(0)=10,\mu=0.1,\sigma=0.2,T=2$, for $K=0$ we get an expected value of $\approx 12.21402758160169833921071994639$, for $K=10$ we get $\approx 2.6528094900348809449924483895885184345427710615192314$. See task10.cpp and task10.plot for implementation.
+
+\end{document}
