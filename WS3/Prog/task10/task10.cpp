@@ -2,9 +2,12 @@
 #include <cstdlib>
 #include <cmath>
 #include <gsl/gsl_integration.h>
+#include <gsl/gsl_randist.h>
+#include <ctime>
 #include <fstream>
 #define _USE_MATH_DEFINES
 #include <vector>
+#include <string>
 using std::vector;
 
 double f(double x){
@@ -12,7 +15,7 @@ double f(double x){
 }
 
 //tensor
-double tensor(int level[], vector<vector<double> > nodes, vector<vector<double> > weights, int d, std::ofstream &file){
+double tensor(int level[], vector<vector<double> > nodes, vector<vector<double> > weights, int d){
 	//weights[i][j]: weight of j-th node on level i
 	//nodes[i][j]: j-th node on level i 
 	int k[d];
@@ -59,8 +62,6 @@ double tensor(int level[], vector<vector<double> > nodes, vector<vector<double> 
 }
 
 double sumall(int level, vector<vector<double> > nodes, vector<vector<double> > weights, int d){
-	std::ofstream file;
-	file.open("test");
 	int k[d];
 
 	double sum=0;
@@ -69,7 +70,7 @@ double sumall(int level, vector<vector<double> > nodes, vector<vector<double> > 
 		k[i]=1;
 
 	while(1){
-		sum+=tensor(k,nodes,weights,d,file);
+		sum+=tensor(k,nodes,weights,d);
 
 		for(int j=1;j<=d;j++){
 			k[j]++;
@@ -85,13 +86,9 @@ double sumall(int level, vector<vector<double> > nodes, vector<vector<double> > 
 				break;
 		}
 	}
-	file.close();
 }
 
 double sumsimplex(int level, vector<vector<double> > nodes, vector<vector<double> > weights, int d){
-	std::ofstream file;
-	file.open("test");
-
 	//sum over simplex
 	int k[d+1];
 	int S=d;
@@ -102,7 +99,7 @@ double sumsimplex(int level, vector<vector<double> > nodes, vector<vector<double
 
 	while(1){
 		//call tensor function with given levels
-		sum+=tensor(k,nodes,weights,d,file);
+		sum+=tensor(k,nodes,weights,d);
 
 		for(int j=1;j<=d;j++){
 			k[j]++;
@@ -118,7 +115,6 @@ double sumsimplex(int level, vector<vector<double> > nodes, vector<vector<double
 
 		}
 	}
-	file.close();
 }
 
 double SparseGridTrapezoidal(int level, int d){
@@ -149,7 +145,7 @@ double SparseGridTrapezoidal(int level, int d){
 		}
 
 	//sum over simplex
-	printf("%f\n",sumsimplex(level,nodes,weights,d));
+	return sumsimplex(level,nodes,weights,d);
 }
 
 double ProductRuleTrapezoidal(int level, int d){
@@ -181,7 +177,7 @@ double ProductRuleTrapezoidal(int level, int d){
 		}
 
 	//sum over simplex
-	printf("%f\n",sumall(level,nodes,weights,d));
+	return sumall(level,nodes,weights,d);
 }
 
 double SparseGridCC(int level, int d){
@@ -214,7 +210,7 @@ double SparseGridCC(int level, int d){
 		}
 
 	//sum over simplex
-	printf("%f\n",sumsimplex(level,nodes,weights,d));
+	return sumsimplex(level,nodes,weights,d);
 }
 
 double ProductRuleCC(int level, int d){
@@ -247,11 +243,97 @@ double ProductRuleCC(int level, int d){
 		}
 
 	//sum over simplex
-	printf("%f\n",sumall(level,nodes,weights,d));
+	return sumall(level,nodes,weights,d);
+}
+
+double MC(int level, int d){
+
+	int n=pow(2,level)-1;
+
+	gsl_rng* r;
+	r=gsl_rng_alloc(gsl_rng_mt19937);
+	gsl_rng_set(r,time(NULL));
+
+	double sum=0;
+	double prod=1;
+
+	for(long int i=0;i<n;i++){
+		for(int j=0;j<d;j++)
+			prod*=f(gsl_rng_uniform(r));
+		sum+=prod;
+		prod=1;
+	}
+
+	return sum/n;
+}
+
+int isprime(int n){
+	for(int i=2;i<=sqrt(n);i++)
+		if(n%i==0)
+			return 0;
+
+	return 1;
+}
+
+void primes(int primes[], int n){
+	int k=0,p=0;
+	while(k<n){
+		p++;
+		if(isprime(p)){
+			primes[k]=p;
+			k++;
+		}
+	}
+}
+
+void vandercorput(double vdc[],int n, int p, int epsilon=12){
+	vdc[0]=0;
+	for(int i=1;i<n;i++){
+		double z=1-vdc[i-1];
+		double v=1./p;
+		while(z*pow(10,epsilon)<v*pow(10,epsilon)+1){
+			v=v/p;
+		}
+		vdc[i]=vdc[i-1]+(p+1)*v-1;
+	}
+}
+
+void halton(double** halton, int n, int d){
+	int prime[d+3];
+	primes(prime,d+3);
+	double vdc[n+500];
+
+	for(int i=0;i<d;i++)
+	{
+		vandercorput(vdc,n+500,prime[i+1]);
+		for(int j=0;j<n;j++)
+			halton[j][i]=vdc[j+500];
+	}
+}
+
+double QMC(int level, int d){
+	int n=pow(2,level)-1;
+
+	double sum=0;
+	double prod=1;
+
+	double *halt[n];
+	for(int i=0;i<n;i++)
+		halt[i]=new double[d];
+
+	halton(halt,n,d);
+
+	for(int i=0;i<n;i++){
+		for(int j=0;j<d;j++)
+			prod*=f(halt[i][j]);
+
+		sum+=prod;
+		prod=1;
+	}
+
+	return sum/n;
 }
 
 int main(){
-	ProductRuleCC(5,3);
-
 	return 1;
 }

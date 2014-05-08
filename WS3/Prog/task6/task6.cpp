@@ -34,8 +34,8 @@ void vandercorput(double vdc[],int n, int p, int epsilon=12){
 }
 
 void halton(double** halton, int n, int d){
-	int prime[200];
-	primes(prime,200);
+	int prime[203];
+	primes(prime,203);
 	double vdc[n];
 
 	for(int i=0;i<d;i++)
