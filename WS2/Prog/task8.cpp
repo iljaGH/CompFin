@@ -23,8 +23,9 @@ void cc(int l){
 		for(int j=1;j<=(n+1)/2;j++){
 			sum+=(double)1/(2*j-1)*std::sin((2*j-1)*(i+1)*M_PI/(n+1));
 		}
-
 		weights[i]=(double)2/(n+1)*sin((i+1)*M_PI/(n+1))*sum;
+		printf("%f ",nodes[i]);
+
 
 		integral+=weights[i]*f(nodes[i]);
 	}
@@ -34,6 +35,6 @@ void cc(int l){
 }
 
 int main(){
-	int level=4;
+	int level=2;
 	cc(level);
 }

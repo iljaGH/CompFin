@@ -22,7 +22,5 @@ double continuousgeometricaverage(int T, int szero, int K, double sigma, double 
 }
 
 int main(){
-	printf("%f",gsl_cdf_gaussian_P(0.3,1));
-
 	return 1;
 }

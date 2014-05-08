@@ -6,7 +6,7 @@
 #define _USE_MATH_DEFINES
 
 double f(double x, void * params){
-	return 1+exp(0.5*x);
+	return 1+0.1*exp(0.5*x);
 }
 
 double cc(int l){
@@ -41,13 +41,14 @@ double trapezoidal(int l){
 	for(int i=0;i<n;i++){
 		nodes[i]=(i+1)/(double)(n+1);
 		if(i==0 || i==n-1)
-			weights[i]=(double)3/2;
+			weights[i]=((double)3/2)/(n+1);
 		else
-			weights[i]=1;
+			weights[i]=1./(n+1);
+
+		printf("%f:%f ",nodes[i],weights[i]);
 
 		integral+=weights[i]*f(nodes[i],0);
 	}
-	integral=integral/(n+1);
 
 	return integral;
 }
@@ -72,7 +73,7 @@ int main(){
 	std::ofstream file;
 	file.open("task9.dat");
 	file << "#level monte-carlo trapezoidal clenshaw-curtis gauss-legendre\n";
-	for(int l=1;l<=maxlevel;l++)
+	for(int l=2;l<=2;l++)
 	{
 		//Gauss-Legendre
 		gsl_integration_glfixed_table * t = gsl_integration_glfixed_table_alloc(pow(2,l)-1);//intervals
@@ -82,8 +83,9 @@ int main(){
 		F.function = &f;
 		F.params = &alpha;
 
-		file << l << " "<<std::abs(expected-montecarlo(l))/expected<<" "<< std::abs(expected-trapezoidal(l))/expected<<" "<<std::abs(expected-cc(l))/expected<<" "<<std::abs(expected-gsl_integration_glfixed(&F,0,1,t))/expected<<"\n";
+		//file << l << " "<<std::abs(expected-montecarlo(l))/expected<<" "<< std::abs(expected-trapezoidal(l))/expected<<" "<<std::abs(expected-cc(l))/expected<<" "<<std::abs(expected-gsl_integration_glfixed(&F,0,1,t))/expected<<"\n";
 		gsl_integration_glfixed_table_free(t);
+		printf("%f ",cc(l));
 	}
 
 	file.close();

@@ -217,8 +217,10 @@ pip-log.txt
 
 #data
 *.dat
+prg
 
 #tex
 *.aux
 *.pdf
 *.synctex.gz
+*.eps

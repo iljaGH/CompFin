@@ -2,7 +2,7 @@
 #include <cmath>
 
 double f(double x){
-	return pow(x,2);
+	return x;
 }
 
 void trapezoidal(int l){
@@ -18,14 +18,17 @@ void trapezoidal(int l){
 		else
 			weights[i]=1;
 
+		printf("%f:%f ",weights[i], nodes[i]);
+
 		integral+=weights[i]*f(nodes[i]);
 	}
+	printf("\n");
 	integral=integral/(n+1);
 
 	printf("approximate integral: %f\n",integral);
 }
 
 int main(){
-	int level=10;
+	int level=1;
 	trapezoidal(level);
 }
