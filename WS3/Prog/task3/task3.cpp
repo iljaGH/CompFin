@@ -24,7 +24,7 @@ double continuousgeometricaverage(int T, int szero, int K, double sigma, double 
 	return szero*exp(-0.5*(r+1./6*sigma*sigma)*T)*gsl_cdf_gaussian_P(d+sigma*sqrt(T/3.),1)-K*exp(-r*T)*gsl_cdf_gaussian_P(d,1);
 }
 
-double simulation(int T, int M, int S0, int K, double sigma, double mu, double r,gsl_rng* rng){
+double simulation(int T, int M, int S0, int K, double sigma, double r,double mu,gsl_rng* rng){
 
 	double w[M+1],s[M+1];
 	double dt=(double)T/M;
@@ -34,7 +34,7 @@ double simulation(int T, int M, int S0, int K, double sigma, double mu, double r
 	double prod=1;
 
 	for(int i=1;i<=M;i++){
-		w[i]=w[i-1]+sqrt(i*dt-(i-1)*dt)*gsl_ran_ugaussian(rng);
+		w[i]=w[i-1]+sqrt(dt)*gsl_ran_ugaussian(rng);
 
 		s[i]=s[0]*exp((mu-0.5*sigma*sigma)*i*dt+sigma*w[i]);
 		prod*=s[i];
@@ -51,12 +51,12 @@ int main(){
 	r=gsl_rng_alloc(gsl_rng_mt19937);
 	gsl_rng_set(r,time(NULL));
 
-	int n=100000;
+	int n=1000;
 	double sum=0;
 	for(int i=0;i<n;i++)
-		sum+=simulation(1,10,10,10,0.25,0,0.1,r);
+		sum+=simulation(1,200,10,10,0.25,0.1,0.1,r);
 
-	printf("%f\n%f\n",discretegeometricaverage(1,10,10,10,0.25,0.1),sum/n);
+	printf("%f\n%f\n",discretegeometricaverage(1,200,10,10,0.25,0.1),sum/n);
 
 	file.close();
 
