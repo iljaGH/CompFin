@@ -45,20 +45,35 @@ double simulation(int T, int M, int S0, int K, double sigma, double r,double mu,
 
 int main(){
 	std::ofstream file;
-	file.open("data.dat");
+	file.open("data10.dat");
 
 	gsl_rng* r;
 	r=gsl_rng_alloc(gsl_rng_mt19937);
 	gsl_rng_set(r,time(NULL));
 
 	int n=1000;
-	double sum=0;
-	for(int i=0;i<n;i++)
-		sum+=simulation(1,200,10,10,0.25,0.1,0.1,r);
+	double sum=exp(-0.1)*simulation(1,10,10,10,0.25,0.1,0.1,r);
+	file << 1 << " "<< sum <<"\n";
 
-	printf("%f\n%f\n",discretegeometricaverage(1,200,10,10,0.25,0.1),sum/n);
+	for(int i=1;i<=n;i++){
+		sum=(sum*i+exp(-0.1)*simulation(1,10,10,10,0.25,0.1,0.1,r))/(i+1);
+		file << i+1 << " "<< sum <<"\n";
+	}
+
 
 	file.close();
+	file.open("data200.dat");
+
+	sum=exp(-0.1)*simulation(1,200,10,10,0.25,0.1,0.1,r);
+	file << 1 << " "<< sum <<"\n";
+
+	for(int i=1;i<=n;i++){
+		sum=(sum*i+exp(-0.1)*simulation(1,200,10,10,0.25,0.1,0.1,r))/(i+1);
+		file << i+1 << " "<< sum <<"\n";
+	}
+
+	file.close();
+
 
 
 	return 1;

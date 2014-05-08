@@ -2,37 +2,41 @@
 #include <cstdlib>
 #include <cmath>
 #include <gsl/gsl_integration.h>
+#include <gsl/gsl_randist.h>
+#include <ctime>
 #include <fstream>
 #define _USE_MATH_DEFINES
 #include <vector>
+#include <string>
 using std::vector;
 
 double f(double x){
-	return 1;
+	return 1+0.1*exp(x/2.);
 }
 
 //tensor
-double tensor(int level[], int d,vector<vector<int> > &list){
-	//weights[i][j]: weight of j-th node on level i shifted down by 1
-	//nodes[i][j]: j-th node on level i shifted down by 1
+double tensor(int level[], int d){
+	//weights[i][j]: weight of j-th node on level i
+	//nodes[i][j]: j-th node on level i 
 	int k[d];
 
-	for(int i=0;i<d;i++)
+	for(int i=1;i<=d;i++)
 		k[i]=1;
 
-	while(1){
-		for(int j=0;j<d;j++)
-			list[]
+	double sum=0;
 
-		//j is dimension shifted down by 1
-		for(int j=0;j<d;j++){
+	while(1){
+
+		sum++;
+
+		for(int j=1;j<=d;j++){
 			k[j]++;
 
 			//we want to get all possible combinations of nodes for the given levels
 			if(k[j]>pow(2,level[j])-1)
 			{
-				if(j==d-1)
-					return 1;
+				if(j==d)
+					return sum;
 				k[j]=1;
 			}
 			else
@@ -42,30 +46,24 @@ double tensor(int level[], int d,vector<vector<int> > &list){
 }
 
 double sumsimplex(int level, int d){
-	std::ofstream file;
-	file.open("test");
-	vector<vector<int> > list;
-
-	list.resize(pow(2,level)-1);
-	for(int i=0;i<pow(2,level)-1;i++)
-		list[i].resize(pow(2,level)-1);
-
 	//sum over simplex
-	int k[d];
+	int k[d+1];
 	int S=d;
-	for(int i=0;i<d;i++)
+	for(int i=1;i<=d;i++)
 		k[i]=1;
 
-	while(1){
-		//call tensor product formula
-		tensor(k,d,list);
+	double sum=0;
 
-		for(int j=0;j<d;j++){
+	while(1){
+		//call tensor function with given levels
+		sum+=tensor(k,d);
+
+		for(int j=1;j<=d;j++){
 			k[j]++;
 			S++;
 			if(S>d+level-1){
-				if(j==d-1)
-					return 1;
+				if(j==d)
+					return sum;
 				S=S-(k[j]-1);
 				k[j]=1;
 			} else{
@@ -74,11 +72,20 @@ double sumsimplex(int level, int d){
 
 		}
 	}
-	file.close();
 }
 
 int main(){
-	sumsimplex(7,3);
+	std::ofstream file;
+	int level=4;
+	file.open("data.dat");
+
+	for(int d=1;d<=10;d++){
+		printf("%i\n",d);
+		file << d << " " << sumsimplex(level,d)<<" " << pow(pow(2,level)-1,d)<<"\n";
+
+	}
+	file.close();
+
 
 	return 1;
 }

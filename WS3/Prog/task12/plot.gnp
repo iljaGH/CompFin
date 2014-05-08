@@ -1,0 +1,7 @@
+set terminal postscript eps color;
+set out 'task12.eps';
+set title "number of points product rule/sparse grid";
+set ylabel "#evaluations";
+set xlabel "dimension";
+set logscale y;
+plot 'data.dat' using 1:2 title "sparse grid", 'data.dat' using 1:3 title "product grid";
