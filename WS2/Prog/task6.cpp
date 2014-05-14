@@ -2,7 +2,7 @@
 #include "integration.hpp"
 
 double f(double x){
-	return pow(x,2);
+	return x;
 }
 
 int main(){

@@ -3,6 +3,7 @@
 \usepackage{amsthm}
 \usepackage{listings}
 \usepackage{graphicx} %for the fugures
+\usepackage{hyperref}
 \usepackage{cleveref} %for the cref command
 
 \title{Practical Lab Numerical Computing Computational Finance \\Bachelor-Worksheet 2}
@@ -11,8 +12,11 @@
 \setlength{\parindent}{0pt}
 
 \begin{document}
+\maketitle 
 
-\maketitle \section*{Task 1} Simulating the price of a call-option leads to
+The files can be found on \url{https://github.com/iljaGH/CompFin/}.
+
+\section*{Task 1} Simulating the price of a call-option leads to
 increasing mean value with larger $\sigma$ of the normal distribution. This is
 due to the price of the call-option
 \begin{eqnarray*}
@@ -20,7 +24,7 @@ V_{call}\left(S,T\right) & = &\max \lbrace S(T)-K,0 \rbrace
 \end{eqnarray*}
 
 always being positive. See task1.cpp,
-task1.plot and \cref{fig:Task1} for details.
+task1.plot and \Cref{fig:Task1} for details.
 \begin{figure}[!ht]
 \input{task1Plot.tex}
 \caption{Mean-Estimate for the call-option prices for different values of
@@ -30,7 +34,7 @@ $\sigma$.}
 
 
 \section*{Task 2} See task2.cpp for code. As we can see in the sample output
-\cref{lst:Task2} below, the variance does not depend on $\Delta t$, since the
+lst. \ref{lst:Task2} below, the variance does not depend on $\Delta t$, since the
 small differences can be caused by the (relatively) small sample size of N=1000
 of the geometric brownian motions.
 \begin{lstlisting}[caption = estimated $\mu$ and $\sigma$ for

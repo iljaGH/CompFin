@@ -1,0 +1,13 @@
+set terminal postscript eps color;
+set out 'task3_10.eps';
+set title "convergence plot for fair value of discrete geometric average option, M=10";
+set ylabel "fair value";
+set xlabel "n";
+plot 'data10.dat' using 1:2 notitle with linespoints;
+
+set terminal postscript eps color;
+set out 'task3_200.eps';
+set title "convergence plot for fair value of discrete geometric average option, M=200";
+set ylabel "fair value";
+set xlabel "n";
+plot 'data200.dat' using 1:2 notitle with linespoints;

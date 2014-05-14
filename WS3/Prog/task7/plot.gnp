@@ -1,0 +1,17 @@
+set terminal postscript eps color;
+set out 'task7_halton.eps';
+set xrange [0:1];
+set yrange [0:1];
+set title "Halton sequence for d=2";
+set ylabel "y";
+set xlabel "x";
+plot 'halton.dat' using 1:2 notitle;
+
+set terminal postscript eps color;
+set out 'task7_uniform.eps';
+set xrange [0:1];
+set yrange [0:1];
+set title "uniform random numbers on unit square";
+set ylabel "y";
+set xlabel "x";
+plot 'uniform.dat' using 1:2 notitle;

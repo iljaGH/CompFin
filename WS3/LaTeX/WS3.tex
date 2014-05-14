@@ -2,6 +2,7 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{listings}
+\usepackage{graphicx}
 
 \title{Practical Lab Numerical Computing Computational Finance \\Bachelor-Worksheet 3}
 \author{Lukas Troska, Ilja Kalmykov}
@@ -15,10 +16,13 @@
 See task2.cpp for code.
 
 \section*{Task 3}
-!!TODO!!
+\includegraphics{task3_10.eps}\\
+\includegraphics{task3_200.eps}\\
 
 \section*{Task 4}
-See task4.cpp for code. The convergence is $N^{-0.5}$(????)
+See task4.cpp for code. The convergence is $N^{-0.5}$(????). The last increase in error is because of the limitations of the datatype int. For $M\ge 1024$ we get under-/overflows in our calculation because the numbers are too big.
+\\
+\includegraphics{task4.eps}\\
 
 \section*{Task 5}
 !!TODO!!
@@ -27,15 +31,35 @@ See task4.cpp for code. The convergence is $N^{-0.5}$(????)
 See task6.cpp for code.
 
 \section*{Task 7}
-See task7.cpp for code. The Halton sequence covers the unit square more evenly than uniformly distributed points.
+See task7.cpp for code. Below is a plot of the first 100 members of the Halton sequence for $d=2$ and 100 uniform random numbers on $(0,1)^2$. As we can see, the Halton sequence covers the unit square more evenly than uniformly distributed points, i.e. "gaps" between the points are not as big.
+\\
+\includegraphics{task7_halton.eps}\\
+\includegraphics{task7_uniform.eps}\\
 
 \section*{Task 8}
 See task8.cpp for code.
 
 \section*{Task 9}
-See task9.cpp and task9.plot.
+\includegraphics{task9_gauss}\\
+\includegraphics{task9_cc}\\
+\includegraphics{task9_trapezoidal}\\
 
 \section*{Task 10}
+See task10.cpp for code.
 
+\section*{Task 11}
+\includegraphics{task11_cc5}\\
+\includegraphics{task11_cc7}\\
+\includegraphics{task11_trap5}\\
+\includegraphics{task11_trap7}\\
+
+\section*{Task 12}
+\includegraphics{task12}\\
+
+\section*{Task 13}
+\includegraphics{task13_d1}\\
+\includegraphics{task13_d2}\\
+\includegraphics{task13_d4}\\
+\includegraphics{task13_d8}\\
 
 \end{document}

@@ -26,7 +26,7 @@ void vandercorput(double vdc[],int n, int p, int epsilon=12){
 	for(int i=1;i<n;i++){
 		double z=1-vdc[i-1];
 		double v=1./p;
-		while(z*pow(10,epsilon)<v*pow(10,epsilon)+1){
+		while(z*pow(10,epsilon)<v*pow(10,epsilon)+1){ //multiplied both by 10e12
 			v=v/p;
 		}
 		vdc[i]=vdc[i-1]+(p+1)*v-1;
@@ -34,8 +34,8 @@ void vandercorput(double vdc[],int n, int p, int epsilon=12){
 }
 
 void halton(double** halton, int n, int d){
-	int prime[200];
-	primes(prime,200);
+	int prime[203];
+	primes(prime,203);
 	double vdc[n];
 
 	for(int i=0;i<d;i++)
@@ -57,8 +57,6 @@ void print2darr(double** arr, int n, int m){
 }
 
 int main(){
-
-
 	int n=10;
 	int d=3;
 

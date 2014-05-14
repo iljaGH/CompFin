@@ -6,7 +6,6 @@ double f(double x, void * params){
 	return 1.0+exp(0.5*x);
 }
 
-
 int main(){
 	int maxlevel=10;
 	double expected=2.0*exp(0.5)-1.0;
