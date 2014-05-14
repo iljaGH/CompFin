@@ -1,10 +1,4 @@
-#include <cstdlib>
-#include <cstdio>
-#include <gsl/gsl_rng.h>
-#include <gsl/gsl_randist.h>
-#include <fstream>
-#include <cmath>
-#include <time.h>
+#include "includes.hpp"
 
 void runTrial(gsl_rng* r,int N, int K, int szero, double mu, double sigma, int T, double deltat, int trial){
 
@@ -21,7 +15,15 @@ void runTrial(gsl_rng* r,int N, int K, int szero, double mu, double sigma, int T
 	int M=T/deltat;
 	double w[M+1],s[M+1];
 
-	double values[N];
+	double values = 0.0;
+	double alpha = values;
+
+	double gamma = values-alpha;
+#if 0
+	double chi = 1/(sigma*sqrt(T))*(std::log(K/s[0])-(mu-sigma*sigma/2)*T);
+	double expected = s[0]*exp(mu*T)*gsl_cdf_gaussian_P(sigma*sqrt(T)-chi,sigma)-K*gsl_cdf_gaussian_P(-chi,sigma);
+	printf("expected, chi: %f, %f\n",expected,chi);
+#endif
 
 	//get the call option value of every GBM
 	for(int j=0;j<N;j++){
@@ -32,16 +34,14 @@ void runTrial(gsl_rng* r,int N, int K, int szero, double mu, double sigma, int T
 			
 			s[i]=s[0]*exp((mu-0.5*sigma*sigma)*i*deltat+sigma*w[i]);
 		}
-		values[j]=std::max(s[M]-K,(double)0);
+		values = std::max(s[M]-K,(double)0);
+
+		gamma = values-alpha;
+		alpha+=gamma/(j+1);
+		file << j+1 <<" " << alpha <<"\n";
+
 	}
-	//mean
-	double alpha=values[0];
-	file << "1 " << alpha <<"\n";
-	for(int i=1;i<N;i++){
-		double gamma=values[i]-alpha;
-		alpha+=gamma/(i+1);
-		file << i+1 <<" " << alpha <<"\n";
-	}
+
 
 	file.close();
 }
@@ -49,7 +49,7 @@ void runTrial(gsl_rng* r,int N, int K, int szero, double mu, double sigma, int T
 
 int main(){
 	double szero=10;
-	int N=1000000;
+	int N=1.0e+6;
 	int K=10;
 	double mu=0.1;
 	double sigma=0.2;

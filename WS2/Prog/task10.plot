@@ -1,11 +1,36 @@
-set term x11 0;
+reset
+set terminal epslatex color
+set out 'task10_0Plot.tex'
 set logscale;
-set xlabel 'level';
+set xlabel 'num nodes';
 set ylabel 'relative error';
-plot 'task10_0.dat' using 1:2 with lines title 'monte-carlo K=0','task10_0.dat' using 1:3 with lines title 'trapezoidal K=0','task10_0.dat' using 1:4 with lines title 'clenshaw-curtis K=0','task10_0.dat' using 1:5 with lines title 'gauss-legendre K=0'
 
-set term x11 1;
-set logscale;
-set xlabel 'level';
-set ylabel 'relative error';
-plot 'task10_10.dat' using 1:2 with lines title 'monte-carlo  K=10','task10_10.dat' using 1:3 with lines title 'trapezoidal  K=10','task10_10.dat' using 1:4 with lines title 'clenshaw-curtis  K=10','task10_10.dat' using 1:5 with lines title 'gauss-legendre  K=10'
+set style line 1 lc rgb '#8b1a0e' pt 6 ps 1 lt 1 lw 2 
+set style line 2 lc rgb '#5e9c36' pt 6 ps 1 lt 1 lw 2
+set style line 3 lc rgb 'blue' pt 6 ps 1 lt 1 lw 2
+set style line 4 lc rgb 'black' pt 6 ps 1 lt 1 lw 2
+
+set style line 11 lc rgb '#ffffff' lt 1
+set border 0 back ls 11
+#set tics out nomirror scale 0,0.001
+#set format ''
+
+set mxtics
+set mytics
+set style line 12 lc rgb '#ddccdd' lt 1 lw 1.5
+set style line 13 lc rgb '#ddccdd' lt 1 lw 0.5
+set grid xtics mxtics ytics mytics back ls 12, ls 13
+
+plot 'task10_10.dat' using 1:2 with lp ls 1 title 'monte-carlo', \
+'task10_10.dat' using 1:3 with lp ls 2 title 'trapezoidal', \
+'task10_10.dat' using 1:4 with lp ls 3 title 'clenshaw-curtis', \
+'task10_10.dat' using 1:5 with lp ls 4 title 'gauss-legendre'
+set out
+
+set out 'task10_10Plot.tex'
+
+plot 'task10_0.dat' using 1:2 with lp ls 1 title 'monte-carlo', \
+'task10_0.dat' using 1:3 with lp ls 2 title 'trapezoidal', \
+'task10_0.dat' using 1:4 with lp ls 3 title 'clenshaw-curtis', \
+'task10_0.dat' using 1:5 with lp ls 4 title 'gauss-legendre'
+set out

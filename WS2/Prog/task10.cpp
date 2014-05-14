@@ -1,9 +1,5 @@
-#include <gsl/gsl_integration.h>
-#include <gsl/gsl_randist.h>
-#include <gsl/gsl_rng.h>
-#include <cmath>
-#include <cstdio>
-#include <fstream>
+#include "includes.hpp"
+#include "integration.hpp"
 #define _USE_MATH_DEFINES
 #define E0 2.50662823884
 #define E1 -18.61500062529
@@ -57,63 +53,10 @@ double f(double x, void * p){
 	return std::max(szero*exp((mu-0.5*sigma*sigma)*T+sigma*sqrt(T)*NormalInverseCDF(x))-K,(double)0);
 }
 
-double cc(int l, void * p){
-	int n=pow(2,l)-1;
-	double nodes[n];
-	double weights[n];
-	double integral=0;
-
-	for(int i=0;i<n;i++){
-		nodes[i]=0.5*(1-std::cos(M_PI*(i+1)/(n+1)));
-
-		double sum=0;
-		for(int j=1;j<=(n+1)/2;j++){
-			sum+=(double)1/(2*j-1)*std::sin((2*j-1)*(i+1)*M_PI/(n+1));
-		}
-
-		weights[i]=(double)2/(n+1)*sin((i+1)*M_PI/(n+1))*sum;
-
-		integral+=weights[i]*f(nodes[i],p);
-	}
-
-	return integral;
-}
-
-double trapezoidal(int l, void * p){
-	int n=pow(2,l)-1;
-	double nodes[n];
-	double weights[n];
-	double integral=0;
-
-	for(int i=0;i<n;i++){
-		nodes[i]=(i+1)/(double)(n+1);
-		if(i==0 || i==n-1)
-			weights[i]=(double)3/2;
-		else
-			weights[i]=1;
-
-		integral+=weights[i]*f(nodes[i],p);
-	}
-	integral=integral/(n+1);
-
-	return integral;
-}
-
-double montecarlo(int l, void * p){
-	int n=pow(2,l)-1;
-	double sum=0;
-
-	gsl_rng* r;
-	r=gsl_rng_alloc(gsl_rng_mt19937);
-
-	for(int i=0;i<n;i++)
-		sum+=f(gsl_rng_uniform(r),p);
-	
-	return sum/n;
-}
-
 int main(){
 	std::ofstream file;
+	file.precision(3);
+	file.setf(std::ios::scientific);
 
 	int maxlevel=10;
 	//K=0
@@ -123,19 +66,15 @@ int main(){
 	struct my_f_params params = {10,0,2,0.1,0.2};
 	double expected=12.21402758160169833921071994639;
 
-	for(int l=1;l<=maxlevel;l++)
+	for(int l=1;l<=maxlevel;++l)
 	{
-		//Gauss-Legendre
-		gsl_integration_glfixed_table * t = gsl_integration_glfixed_table_alloc(pow(2,l)-1);//intervals
-
-		gsl_function F;
-		F.function = &f;
-		F.params = &params;
-
-		file << l << " "<<std::abs(expected-montecarlo(l,&params))/expected<<" "<< std::abs(expected-trapezoidal(l,&params))/expected<<" "<<std::abs(expected-cc(l,&params))/expected<<" "<<std::abs(expected-gsl_integration_glfixed(&F,0,1,t))/expected<<"\n";
-
-		gsl_integration_glfixed_table_free(t);
+		file << pow(2,l) << " "
+				<< std::abs(expected-quadrature(l,montecarlo,f,(void*)(&params)))/expected<<" "
+				<< std::abs(expected-quadrature(l,trapezoidal,f,(void*)(&params)))/expected<<" "
+				<< std::abs(expected-quadrature(l,cc,f,(void*)(&params)))/expected<<" "
+				<< std::abs(expected-quadrature(l,gaussian,f,(void*)(&params)))/expected<<"\n";
 	}
+
 	file.close();
 
 	//K=10
@@ -145,18 +84,14 @@ int main(){
 
 	expected=2.652809490034880944992448389588518;
 
-	for(int l=1;l<=maxlevel;l++)
-	{
-		//Gauss-Legendre
-		gsl_integration_glfixed_table * t = gsl_integration_glfixed_table_alloc(pow(2,l)-1);//intervals
-
-		gsl_function F;
-		F.function = &f;
-		F.params = &params2;
-
-		file << l << " "<<std::abs(expected-montecarlo(l,&params2))/expected<<" "<< std::abs(expected-trapezoidal(l,&params2))/expected<<" "<<std::abs(expected-cc(l,&params2))/expected<<" "<<std::abs(expected-gsl_integration_glfixed(&F,0,1,t))/expected<<"\n";
-		gsl_integration_glfixed_table_free(t);
-	}
+	for(int l=1;l<=maxlevel;++l)
+		{
+			file << pow(2,l) << " "
+					<< std::abs(expected-quadrature(l,montecarlo,f,(void*)(&params2)))/expected<<" "
+					<< std::abs(expected-quadrature(l,trapezoidal,f,(void*)(&params2)))/expected<<" "
+					<< std::abs(expected-quadrature(l,cc,f,(void*)(&params2)))/expected<<" "
+					<< std::abs(expected-quadrature(l,gaussian,f,(void*)(&params2)))/expected<<"\n";
+		}
 
 	file.close();
 }

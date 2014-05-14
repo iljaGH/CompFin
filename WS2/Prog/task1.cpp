@@ -1,9 +1,4 @@
-#include <cstdlib>
-#include <cstdio>
-#include <gsl/gsl_rng.h>
-#include <gsl/gsl_randist.h>
-#include <fstream>
-#include <cmath>
+#include "includes.hpp"
 
 int main(){
 	int N=1000;
@@ -16,6 +11,9 @@ int main(){
 	double w[M+1],s[M+1];
 	std::ofstream file;
 
+	file.precision(3);
+	file.setf(std::ios::scientific);
+
 	file.open("task1.dat");
 
 	gsl_rng* r;
@@ -23,7 +21,7 @@ int main(){
 	gsl_rng_set(r,time(NULL));
 
 	double sum=0;
-	for(double sigma=0;sigma<=0.8;sigma+=0.2){
+	for(double sigma=0.0;sigma<=0.8;sigma+=0.2){
 		for(int j=1;j<=N;j++){
 			s[0]=10;
 			w[0]=gsl_ran_ugaussian(r);

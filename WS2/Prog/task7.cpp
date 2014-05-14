@@ -1,10 +1,11 @@
-#include <gsl/gsl_integration.h>
-#include <cmath>
-#include <cstdio>
+#include "includes.hpp"
+#include "integration.hpp"
+
 
 //define integrand here
 double f (double x, void * params) {
   double alpha = *(double *) params;
+  if(alpha){}
   double f = 2*pow(x,5)+pow(x,3)+4*pow(x,2)+3;
   return f;
 }
@@ -21,10 +22,18 @@ int main ()
 	F.function = &f;
 	F.params = &alpha;
 
-	//integrate (gauß-legendre) f over (0,1) using interval table t
+	//integrate (gauss-legendre) f over (0,1) using interval table t
 	double result=gsl_integration_glfixed(&F,0,1,t); 
 
+	double resultIter = 0.0;
+	std::vector<double> nodes, weights;
+	gaussian(l,nodes,weights);
+
+	for (size_t i = 0; i < nodes.size(); ++i)
+		resultIter += f(nodes[i],&alpha)*weights[i];
+
 	printf ("result          = % .18f\n", result);
+	printf ("resultIter 	 = % .18f\n", resultIter);
 
 	gsl_integration_glfixed_table_free(t);
 }

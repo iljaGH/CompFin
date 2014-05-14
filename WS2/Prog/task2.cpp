@@ -1,16 +1,18 @@
-#include <cstdlib>
-#include <cstdio>
-#include <gsl/gsl_rng.h>
-#include <gsl/gsl_randist.h>
-#include <fstream>
-#include <cmath>
+#include "includes.hpp"
 
-void runTrial(gsl_rng* r,int N, int K, int szero, double mu, double sigma, int T, double deltat){
+void runTrial(gsl_rng* r,int N, int K, int szero, double mu, double sigma,
+		int T, double deltat, std::ofstream& file){
 
 	int M=T/deltat;
 	double w[M+1],s[M+1];
 
-	double values[N];
+	double Phi = gsl_cdf_gaussian_P(,sigma);
+	double closedForm = s[0]*exp(mu*T)*Phi - K*phi;
+
+	double values = 0.0;
+	double alpha = 0.0;
+	double beta = 0.0;
+	double gamma = 0.0;
 
 	//get the call option value of every GBM.
 	for(int j=0;j<N;j++){
@@ -21,37 +23,47 @@ void runTrial(gsl_rng* r,int N, int K, int szero, double mu, double sigma, int T
 			
 			s[i]=s[0]*exp((mu-0.5*sigma*sigma)*i*deltat+sigma*w[i]);
 		}
-		values[j]=std::max(s[M]-K,(double)0);
+		values=std::max(s[M]-K,0.0);
+		//mean+variance
+		gamma=values-alpha;
+		alpha+=gamma/(j+1);
+		beta=beta+gamma*gamma*j/(j+1);
 	}
 
-	//mean+variance
-	double alpha=values[0];
-	double beta=0;
-	for(int i=1;i<N;i++){
-		double gamma=values[i]-alpha;
-		alpha+=gamma/(i+1);
-		beta=beta+gamma*gamma*i/(i+1);
-	}
 	double esigma=sqrt(beta/(N-1));
 
-	printf("deltat=%f,mean=%f,variance=%f\n",deltat,alpha,esigma);
+	file<<alpha<<" "<<esigma<<" ";
 
 }
 
 int main(){
-	int N=1000;
+	long N=1000;
 	int K=10;
 	double mu=0.1;
 	double sigma=0.2;
+	double deltaT[] = {0.2,0.4,0.5,1.0,2.0};
 	int T=2;
 
 	gsl_rng* r;
 	r=gsl_rng_alloc(gsl_rng_mt19937);
 	gsl_rng_set(r,time(NULL));
 
-	runTrial(r,N,K,10,mu,sigma,T,0.2);
-	runTrial(r,N,K,10,mu,sigma,T,0.4);
-	runTrial(r,N,K,10,mu,sigma,T,0.5);
-	runTrial(r,N,K,10,mu,sigma,T,1.0);
-	runTrial(r,N,K,10,mu,sigma,T,2.0);
+	std::ofstream file;
+
+	file.precision(3);
+	file.setf(std::ios::scientific);
+
+	file.open("task2.dat");
+
+	for (N = 1000; N <= 1.0e+7; N*=2.0e+0)
+	{
+		file<<N<<" ";
+		for (int j = 0; j<5; ++j)
+		{
+			runTrial(r,N,K,10,mu,sigma,T,deltaT[j],file);
+		}
+		file<<std::endl;
+	}
+
+	file.close();
 }

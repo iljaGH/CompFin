@@ -2,6 +2,8 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{listings}
+\usepackage{graphicx} %for the fugures
+\usepackage{cleveref} %for the cref command
 
 \title{Practical Lab Numerical Computing Computational Finance \\Bachelor-Worksheet 2}
 \author{Lukas Troska, Ilja Kalmykov}
@@ -10,44 +12,141 @@
 
 \begin{document}
 
-\maketitle
-\section*{Task 1}
-See task1.cpp and task1.plot.
+\maketitle \section*{Task 1} Simulating the price of a call-option leads to
+increasing mean value with larger $\sigma$ of the normal distribution. This is
+due to the price of the call-option
+\begin{eqnarray*}
+V_{call}\left(S,T\right) & = &\max \lbrace S(T)-K,0 \rbrace
+\end{eqnarray*}
 
-\section*{Task 2}
-See task2.cpp for code. As we can see in the sample output below, the variance does not depend on $\Delta t$, since the small differences can be accounted for by the (relatively) small sample size of N=1000 geometric brownian motions.
-\begin{lstlisting}[frame=single] 
-deltat=0.200000,mean=3.190125,variance=3.887499
-deltat=0.400000,mean=3.150493,variance=3.843603
-deltat=0.500000,mean=2.946877,variance=3.814984
-deltat=1.000000,mean=2.908374,variance=3.782305
-deltat=2.000000,mean=3.098824,variance=3.780594
+always being positive. See task1.cpp,
+task1.plot and \cref{fig:Task1} for details.
+\begin{figure}[!ht]
+\input{task1Plot.tex}
+\caption{Mean-Estimate for the call-option prices for different values of
+$\sigma$.}
+\label{fig:Task1}
+\end{figure}
+
+
+\section*{Task 2} See task2.cpp for code. As we can see in the sample output
+\cref{lst:Task2} below, the variance does not depend on $\Delta t$, since the
+small differences can be caused by the (relatively) small sample size of N=1000
+of the geometric brownian motions.
+\begin{lstlisting}[caption = estimated $\mu$ and $\sigma$ for
+different values of $\Delta t$ and N = 1.0E3, captionpos=b, label=lst:Task2] 
+delta t = 2.000e-001 mean = 2.874e+000 variance = 3.811e+000
+delta t = 4.000e-001 mean = 2.727e+000 variance = 3.429e+000
+delta t = 5.000e-001 mean = 3.001e+000 variance = 3.752e+000
+delta t = 1.000e+000 mean = 2.847e+000 variance = 3.747e+000
+delta t = 2.000e+000 mean = 3.214e+000 variance = 3.885e+000
 \end{lstlisting}
 
-
 \section*{Task 3}
-!!!STILL TO PROVE!!!
+\begin{eqnarray*}
+\cfrac{1}{\sqrt{2\pi}}\int_{\chi}^{\infty}K\exp\left(-\cfrac{s^2}{2}\right)ds &
+= & \cfrac{1}{\sqrt{2\pi}}\left(\int_{-\infty}^{\infty}K\exp\left(-\cfrac{s^2}{2}\right)ds
+- \int_{\infty}^{\chi}K\exp\left(-\cfrac{s^2}{2}\right)ds \right) \\
+& = & K\left(1 - \Phi(\chi)\right) = K \Phi(-\chi)
+\end{eqnarray*}
 
 \section*{Task 4}
-See task4.cpp and task4.plot for code. The rate of convergence !!?!?!?!?!?!?
+See task4.cpp, task4.plot and \cref{fig:Task4} for details. 
 
+\begin{figure}[!ht]
+\input{task4Plot.tex}
+\caption{Approximation of $E\left[V_{call}(S_T,0)\right]$.}
+\label{fig:Task4}
+\end{figure}
 
-\section*{Task 5}
-This formula is just a transformation. We have $\Phi(x)=\dfrac{1}{\sqrt{(2\pi)}}\int_{-\infty}^\infty exp({-\dfrac{t^2}{2}})dt$ and thus $\Phi'(x)=\dfrac{1}{\sqrt{(2\pi)}}\exp({-\dfrac{t^2}{2}})$. Applying the transformation $\Phi$ to $\int_0^1f(\Phi^{-1}(t))dt$ and using integration by substitution gives us: $\int_0^1f(\Phi^{-1}(t))dt=\int_{\Phi(0)}^{\Phi(1)}(\Phi(\Phi^{-1}(t)))\Phi'(t)dt=\int_{-\infty}^{\infty}f(s)\Phi'(s)ds=\int_{-\infty}^{\infty}f(s)\dfrac{1}{\sqrt{(2\pi)}}\exp({-\dfrac{s^2}{2}})ds=\dfrac{1}{\sqrt{(2\pi)}}\int_{-\infty}^{\infty}f(s)\exp({-\dfrac{s^2}{2}})ds$.
+\section*{Task 5} This formula is just a transformation. We have
+\[\Phi(x)=\dfrac{1}{\sqrt{2\pi}}\int_{-\infty}^x
+\exp\left({-\dfrac{t^2}{2}}\right)dt\] 
+and thus
+\[\Phi'(x)=\dfrac{1}{\sqrt{2\pi}}\exp\left({-\dfrac{x^2}{2}}\right)\]
 
-\section*{Task 6}
-See task6.cpp for code. There is a relationship: You get the nodes on level $(l+1)$ by taking the nodes on level $l$ and putting a new node equidistant between two old nodes and also putting a new node equidistantly between $0$ and the first old node, or $1$ and the last old node respectively.
+For the derivative of the inverse we have in general, with $y = f(x)$:
+\[\left(f^{-1}\right)'(y) = \left(f'\left(f^{-1}(y)\right)\right)^{-1}\]
+
+and thus for the cumulative distribution function we get:
+\begin{eqnarray}
+\left(\Phi^{-1}\right)'(y) & = &
+\left(\Phi'(\Phi^{-1}(y)\right)^{-1} \nonumber\\
+\Leftrightarrow \quad \Phi'(\Phi^{-1}(y) & = & \left(\Phi^{-1}(y)\right)^{-1}
+\label{equ:deriv}
+\end{eqnarray}
+
+Applying the transformation $s = \Phi^{-1}(t)$ and eq. (\ref{equ:deriv}) to 
+\[\dfrac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}f(s)\exp\left({-\dfrac{s^2}{2}}\right)ds\]
+and using integration by substitution gives us:
+\begin{eqnarray*}
+\dfrac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}f(s)\exp\left({-\dfrac{s^2}{2}}\right)ds
+& = &
+\int_{-\infty}^{\infty}f(s)\underbrace{\dfrac{1}{\sqrt{(2\pi)}}\exp\left({-\dfrac{s^2}{2}}\right)}_{\Phi'(\Phi^{-1})(t)
+= \frac{1}{\left(\Phi^{-1}\right)'(t)}}ds \\
+& =
+&\int_{\Phi^{-1}(-\infty)}^{\Phi^{-1}(\infty)}f(\Phi^{-1}(t))\left(\Phi^{-1}\right)'(t)\cfrac{1}{\left(\Phi^{-1}\right)'(t)}ds
+\\
+& = &
+\int_{1}^{0}f(\Phi^{-1}(t))ds
+\end{eqnarray*}
+
+\section*{Task 6} See task6.cpp for code. There is a relationship: You get the
+nodes on level $(l+1)$ by taking the nodes on level $l$ and putting a new node
+equidistant between two old nodes and also putting a new node equidistantly
+between $0$ and the first old node, or $1$ and the last old node respectively.
+Nodes positions are:
+\begin{eqnarray*}
+x_i = \cfrac{1}{N_l+1} = \cfrac{1}{2^l}
+\end{eqnarray*}
 
 \section*{Task 7}
-See task7.cpp for code. We used GSL for Gauss-Legendre quadrature. !!ADD relationship of nodes!!
+See task7.cpp for code. We used GSL for Gauss-Legendre quadrature. The nodes for
+the gaussian quadrature of degree $n$ are the roots of a polynomial of degree n
+belonging to a class of orthogonal polynomials.
 
-\section*{Task 8}
-See task8.cpp for code. Yes, there is a relationship: on level $l+1$, we have the nodes from level $l$, and inbetween each "old" node we add a new node as follows: if on level $l$ we have nodes $x_i,x_{i+1}$ at $\dfrac{1}{2}(1-\cos(\dfrac{\pi i}{N_l+1}))$ and $\dfrac{1}{2}(1-\cos(\dfrac{\pi(i+1)}{N_l+1}))$ respectively, then on level $l+1$ they are node $x_{2i}$ and $x_{2i+2}$ respectively, since $\dfrac{i}{N_l+1}=\dfrac{2i}{N_{l+1}+1}$ (for $i+1$ analogously). We basically add nodes  $x_{i+0.5}$ for $0\le i \le N_l$.
+\section*{Task 8} See task8.cpp for code. Yes, there is a relationship: on level
+$l+1$, we have the nodes from level $l$, and inbetween each "old" node we add a
+new node as follows: if on level $l$ we have nodes $x_i,x_{i+1}$ at
+\[ \dfrac{1}{2}\left(1-\cos\left(\dfrac{\pi i}{N_l+1}\right)\right)\]
+ and
+\[\dfrac{1}{2}\left(1-\cos\left(\dfrac{\pi(i+1)}{N_l+1}\right)\right)\]
+ respectively, then on level $l+1$ they are node $x_{2i}$ and $x_{2i+2}$ respectively, since
+\[\dfrac{i}{N_l+1}=\dfrac{2i}{N_{l+1}+1}\]
+ (for $i+1$ analogously). We basically add nodes  $x_{i+0.5}$ for $0\le i \le
+ N_l$.
 
 \section*{Task 9}
-See task9.cpp and task9.plot. !!not sure if we have to plot error against level or $N_j$?"!!
+See task9.cpp,
+task9.plot for implementation. The convergence plots can be found in
+\cref{fig:Task9}.
 
-\section*{Task 10}
-Plugging in the usual values $S(0)=10,\mu=0.1,\sigma=0.2,T=2$, for $K=0$ we get an expected value of $\approx 12.21402758160169833921071994639$, for $K=10$ we get $\approx 2.6528094900348809449924483895885184345427710615192314$. See task10.cpp and task10.plot for implementation.
+\begin{figure}[!ht]
+\input{task9Plot.tex}
+\caption{Relative error of different integration methods for
+$1+\gamma\exp\left(\frac{1}{2}x\right)$ on $\left[0,1\right]$.}
+\label{fig:Task9}
+\end{figure}
+
+\section*{Task 10} For the values
+$S(0)=10,\mu=0.1,\sigma=0.2,T=2$ and $K=0$ we get an expected value of $\approx
+12.21402758160169833921071994639$, for $K=10$ we get $\approx
+2.6528094900348809449924483895885184345427710615192314$. See task10.cpp,
+task10.plot for implementation. The convergence plots can be found in
+\cref{fig:Task10_0} and \cref{fig:Task10_10}.
+
+\begin{figure}[!ht]
+\input{task10_0Plot.tex}
+\caption{Relative error of different integration methods for
+$f_{call}\circ \Phi^{-1}$ with $K = 0$.}
+\label{fig:Task10_0}
+\end{figure}
+
+\begin{figure}[!ht]
+\input{task10_10Plot.tex}
+\caption{Relative error of different integration methods for
+$f_{call}\circ \Phi^{-1}$ with $K = 10$.}
+\label{fig:Task10_10}
+\end{figure}
 
 \end{document}
