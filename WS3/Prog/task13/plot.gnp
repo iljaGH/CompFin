@@ -1,6 +1,6 @@
 set terminal postscript eps color;
 set object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb"light-gray" behind
-set out 'task13_d1.eps';
+set out '../../LaTeX/task13_d1.eps';
 set title "convergence plots for d=1";
 set ylabel "relative error";
 set xlabel "level";
@@ -9,7 +9,7 @@ plot 'd1.dat' using 1:2 with lines title "MC", 'd1.dat' using 1:3 with lines tit
 
 set terminal postscript eps color;
 set object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb"light-gray" behind
-set out 'task13_d2.eps';
+set out '../../LaTeX/task13_d2.eps';
 set title "convergence plots for d=2";
 set ylabel "relative error";
 set xlabel "level";
@@ -18,7 +18,7 @@ plot 'd2.dat' using 1:2 with lines title "MC", 'd2.dat' using 1:3 with lines tit
 
 set terminal postscript eps color;
 set object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb"light-gray" behind
-set out 'task13_d4.eps';
+set out '../../LaTeX/task13_d4.eps';
 set title "convergence plots for d=3";
 set ylabel "relative error";
 set xlabel "level";
@@ -28,7 +28,7 @@ plot 'd4.dat' using 1:2 with lines title "MC", 'd4.dat' using 1:3 with lines tit
 
 set terminal postscript eps color;
 set object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb"light-gray" behind
-set out 'task13_d8.eps';
+set out '../../LaTeX/task13_d8.eps';
 set title "convergence plots for d=4";
 set ylabel "relative error";
 set xlabel "level";

@@ -31,7 +31,7 @@ double simulation(int T, int M, int S0, int K, double sigma, double r,double mu,
 
 	s[0]=S0;
 	w[0]=gsl_ran_ugaussian(rng);
-	double prod=1;
+	double prod=S0;
 
 	for(int i=1;i<=M;i++){
 		w[i]=w[i-1]+sqrt(dt)*gsl_ran_ugaussian(rng);
@@ -52,11 +52,11 @@ int main(){
 	gsl_rng_set(r,time(NULL));
 
 	int n=1000;
-	double sum=exp(-0.1)*simulation(1,10,10,10,0.25,0.1,0.1,r);
+	double sum=exp(-0.1)*simulation(1,16,10,0,0.25,0.1,0.1,r);
 	file << 1 << " "<< sum <<"\n";
 
 	for(int i=1;i<=n;i++){
-		sum=(sum*i+exp(-0.1)*simulation(1,10,10,10,0.25,0.1,0.1,r))/(i+1);
+		sum=(sum*i+exp(-0.1)*simulation(1,16,10,0,0.25,0.1,0.1,r))/(i+1);
 		file << i+1 << " "<< sum <<"\n";
 	}
 
@@ -71,6 +71,9 @@ int main(){
 		sum=(sum*i+exp(-0.1)*simulation(1,200,10,10,0.25,0.1,0.1,r))/(i+1);
 		file << i+1 << " "<< sum <<"\n";
 	}
+
+	//TEST
+	printf("%f\n",exp(-0.1)*discretegeometricaverage(1, 16, 10, 0, 0.25, 0.1));
 
 	file.close();
 

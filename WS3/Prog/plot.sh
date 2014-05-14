@@ -1,0 +1,10 @@
+cd task3 && gnuplot 'plot.gnp' && cd ..;
+cd task4 && gnuplot 'plot.gnp' && cd ..;
+cd task7 && gnuplot 'plot.gnp' && cd ..;
+cd task9 && gnuplot 'plot.gnp' && cd ..;
+cd task11 && gnuplot 'plot.gnp' && cd ..;
+cd task12 && gnuplot 'plot.gnp' && cd ..;
+cd task13 && gnuplot 'plot.gnp' && cd ..;
+cd task15 && gnuplot 'plot.gnp' && cd ..;
+cd task16 && gnuplot 'plot.gnp' && cd ..;
+cd task17 && gnuplot 'plot.gnp' && cd ..;

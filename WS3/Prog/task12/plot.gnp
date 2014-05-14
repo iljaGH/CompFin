@@ -1,5 +1,5 @@
 set terminal postscript eps color;
-set out 'task12.eps';
+set out '../../LaTeX/task12.eps';
 set title "number of points product rule/sparse grid";
 set ylabel "#evaluations";
 set xlabel "dimension";

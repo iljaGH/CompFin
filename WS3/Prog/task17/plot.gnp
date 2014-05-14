@@ -1,0 +1,17 @@
+set terminal postscript eps color;
+#set object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb"light-gray" behind
+set out '../../LaTeX/task17_mc.eps';
+set title "convergence plot for MC rndwlk/BB";
+set ylabel "relative error";
+set xlabel "level";
+set logscale y;
+plot 'mc.dat' using 1:2 with lines title "Randomwalk", 'mc.dat' using 1:3 with lines title "Brownian Bridge";
+
+set terminal postscript eps color;
+#set object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb"light-gray" behind
+set out '../../LaTeX/task17_qmc.eps';
+set title "convergence plot for QMC rndwlk/BB";
+set ylabel "relative error";
+set xlabel "level";
+set logscale y;
+plot 'qmc.dat' using 1:2 with lines title "Randomwalk", 'qmc.dat' using 1:3 with lines title "Brownian Bridge";

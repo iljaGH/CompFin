@@ -1,26 +1,26 @@
 set terminal postscript eps color;
-set out 'task11_cc5.eps';
+set out '../../LaTeX/task11_cc5.eps';
 set title "sparse grid for Clenshaw Curtis at level=5";
 set ylabel "y";
 set xlabel "x";
 plot 'cc_5.dat' using 1:2 notitle;
 
 set terminal postscript eps color;
-set out 'task11_cc7.eps';
+set out '../../LaTeX/task11_cc7.eps';
 set title "sparse grid for Clenshaw Curtis at level=7";
 set ylabel "y";
 set xlabel "x";
 plot 'cc_7.dat' using 1:2 notitle;
 
 set terminal postscript eps color;
-set out 'task11_trap_5.eps';
+set out '../../LaTeX/task11_trap_5.eps';
 set title "product rule grid for trapezoidal rule at level=5";
 set ylabel "y";
 set xlabel "x";
 plot 'trap_5.dat' using 1:2 notitle;
 
 set terminal postscript eps color;
-set out 'task11_trap_7.eps';
+set out '../../LaTeX/task11_trap_7.eps';
 set title "product rule grid for trapezoidal rule at level=7";
 set ylabel "y";
 set xlabel "x";
