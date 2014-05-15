@@ -14,14 +14,14 @@ plot 'cc_7.dat' using 1:2 notitle;
 
 set terminal postscript eps color;
 set out '../../LaTeX/task11_trap_5.eps';
-set title "product rule grid for trapezoidal rule at level=5";
+set title "sparse grid for trapezoidal rule at level=5";
 set ylabel "y";
 set xlabel "x";
 plot 'trap_5.dat' using 1:2 notitle;
 
 set terminal postscript eps color;
 set out '../../LaTeX/task11_trap_7.eps';
-set title "product rule grid for trapezoidal rule at level=7";
+set title "sparse grid for trapezoidal rule at level=7";
 set ylabel "y";
 set xlabel "x";
 plot 'trap_7.dat' using 1:2 notitle;

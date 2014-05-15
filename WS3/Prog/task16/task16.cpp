@@ -26,7 +26,7 @@ double randomwalk(double z[]){
 
 	s[0]=szero;
 	w[0]=z[0];
-	double prod=szero;
+	double prod=1;
 
 	for(int i=1;i<=M;i++){
 		w[i]=w[i-1]+sqrt(dt)*z[i];
@@ -35,7 +35,7 @@ double randomwalk(double z[]){
 		prod*=s[i];
 	}
 
-	return pow(prod,1./M);
+	return std::max(pow(prod,1./M)-K,(double)0);
 }
 
 double brownianbridge(double z[]){
@@ -49,7 +49,7 @@ double brownianbridge(double z[]){
 	s[0]=szero;
 	w[0]=z[0];
 	w[M]=sqrt(T)*z[0];
-	double prod=szero;
+	double prod=1;
 
 	//for each level do: if nodeindex is odd (not calculated yet): use formula
 	int i=1;
@@ -63,7 +63,7 @@ double brownianbridge(double z[]){
 		prod*=s[i];
 	}
 
-	return pow(prod,1./M);
+	return std::max(pow(prod,1./M)-K,(double)0);
 }
 
 double f(double x[]){

@@ -26,7 +26,7 @@ double randomwalk(double z[]){
 
 	s[0]=szero;
 	w[0]=z[0];
-	double prod=szero;
+	double prod=1;
 
 	for(int i=1;i<=M;i++){
 		w[i]=w[i-1]+sqrt(dt)*z[i];
@@ -35,7 +35,7 @@ double randomwalk(double z[]){
 		prod*=s[i];
 	}
 
-	return pow(prod,1./M);
+	return std::max(pow(prod,1./M)-K,(double)0);
 }
 
 double brownianbridge(double z[]){
@@ -49,7 +49,7 @@ double brownianbridge(double z[]){
 	s[0]=szero;
 	w[0]=z[0];
 	w[M]=sqrt(T)*z[0];
-	double prod=szero;
+	double prod=1;
 
 	//for each level do: if nodeindex is odd (not calculated yet): use formula
 	int i=1;
@@ -63,7 +63,7 @@ double brownianbridge(double z[]){
 		prod*=s[i];
 	}
 
-	return pow(prod,1./M);
+	return std::max(pow(prod,1./M)-K,(double)0);
 }
 
 double f(double x[]){
@@ -398,6 +398,18 @@ double QMC(int level, int d){
 	return sum/n;
 }
 
+double discretegeometricaverage(){
+	double dt=(double)T/M;
+
+	double T1=T-(M*(M-1)*(4*M+1))/(6.*M*M)*dt;
+	double T2=T-(M-1)/2.*dt;
+
+	double A=exp(-r*(T-T2)-sigma*sigma*(T2-T1)/2.);
+	double d=(log((double)szero/K)+(r-0.5*sigma*sigma)*T2)/(sigma*sqrt(T1));
+
+	return szero*A*gsl_cdf_gaussian_P(d+sigma*sqrt(T1),1)-K*exp(-r*T)*gsl_cdf_gaussian_P(d,1);
+}
+
 
 int main(){
 	int maxlevel =6;
@@ -406,10 +418,12 @@ int main(){
 
 	for(int i=1;i<maxlevel;i++){
 		rndwlk=1;
+				double expected=discretegeometricaverage();
+
 		double res1=exp(-0.1)*MC(i,M);
 		rndwlk=0;
 		double res2=exp(-0.1)*MC(i,M);
-		printf("%i %f %f\n",i,res1,res2);
+		printf("%i %f %f %f\n",i,expected,res1,res2);
 		file << i << " "<< res1 << " "<< res2 << "\n";
 	}
 
@@ -419,10 +433,11 @@ int main(){
 
 	for(int i=1;i<maxlevel;i++){
 		rndwlk=1;
+		double expected=discretegeometricaverage();
 		double res1=exp(-0.1)*QMC(i,M);
 		rndwlk=0;
 		double res2=exp(-0.1)*QMC(i,M);
-		printf("%i %f %f\n",i,res1,res2);
+		printf("%i %f %f %f\n",i,expected,res1,res2);
 		file << i << " "<< res1 << " "<< res2 << "\n";
 	}
 

@@ -6,7 +6,7 @@
 #include <cmath>
 #include <fstream>
 
-double discretearithmeticaverage(int T, int M, int S0, int K, double sigma, double mu, double r,gsl_rng* rng){
+double discretearithmeticaverage(int T, int M, int S0, int K, double sigma, double r,gsl_rng* rng){
 
 	double w[M+1],s[M+1];
 	double dt=(double)T/M;
@@ -18,7 +18,7 @@ double discretearithmeticaverage(int T, int M, int S0, int K, double sigma, doub
 	for(int i=1;i<=M;i++){
 		w[i]=w[i-1]+sqrt(i*dt-(i-1)*dt)*gsl_ran_ugaussian(rng);
 
-		s[i]=s[0]*exp((mu-0.5*sigma*sigma)*i*dt+sigma*w[i]);
+		s[i]=s[0]*exp((r-0.5*sigma*sigma)*i*dt+sigma*w[i]);
 		sum+=s[i];
 	}
 
@@ -45,18 +45,16 @@ double continuousgeometricaverage(int T, int szero, int K, double sigma, double 
 
 int main(){
 	std::ofstream file;
-	file.open("data.dat");
+	file.open("task5.dat");
 
 	gsl_rng* r;
 	r=gsl_rng_alloc(gsl_rng_mt19937);
 	gsl_rng_set(r,time(NULL));
 
-	int n=100000;
 	double sum=0;
-	for(int i=0;i<n;i++)
-		sum+=simulation(1,10,10,10,0.25,0,0.1,r);
-
-	printf("%f\n%f\n",discretegeometricaverage(1,10,10,10,0.25,0.1),sum/n);
+	for(int i=0;i<50;i++)
+		sum+=discretearithmeticaverage(1,10,10,10,.25,.1,r);
+	printf("%f\n",sum/50);
 
 	file.close();
 
