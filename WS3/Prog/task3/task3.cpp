@@ -30,7 +30,7 @@ double simulation(int T, int M, int S0, int K, double sigma, double r,gsl_rng* r
 	double dt=(double)T/M;
 
 	s[0]=S0;
-	w[0]=gsl_ran_ugaussian(rng);
+	w[0]=0;
 	double prod=1;
 
 	for(int i=1;i<=M;i++){
@@ -52,33 +52,29 @@ int main(){
 	r=gsl_rng_alloc(gsl_rng_mt19937);
 	gsl_rng_set(r,time(NULL));
 
-	int n=1000;
+	int n=100000;
 	double sum=0;
-	file << 1 << " "<< sum <<"\n";
+	double expected=discretegeometricaverage(1, 10, 10, 10, 0.25, 0.1);
+	file << "#simulations error\n";
 
 	for(int i=0;i<n;i++){
 		double res=simulation(1,10,10,10,0.25,0.1,r);
 		sum=(sum*i+res)/(i+1);
-		file << i+1 << " "<< sum <<"\n";
+		file << i+1 << " "<< std::abs(expected-exp(-0.1)*sum)/expected <<"\n";
 	}
-
-
-	//aus irgendeinem Grund kommt das doppelte bei der Simulation raus?
-	printf("%f %f\n",discretegeometricaverage(1, 10, 10, 10, 0.25, 0.1),exp(-0.1)*sum);
-
 
 	file.close();
 	file.open("data200.dat");
 
 	sum=0;
+	expected=discretegeometricaverage(1, 200, 10, 10, 0.25, 0.1);
+	file << "#simulations error\n";
 
 	for(int i=0;i<n;i++){
-	sum=(sum*i+simulation(1,200,10,10,0.25,0.1,r))/(i+1);
-		file << i+1 << " "<< sum <<"\n";
+		double res=simulation(1,200,10,10,0.25,0.1,r);
+		sum=(sum*i+res)/(i+1);
+		file << i+1 << " "<< std::abs(expected-exp(-0.1)*sum)/expected <<"\n";
 	}
-
-	//aus irgendeinem Grund kommt das doppelte bei der Simulation raus?
-	printf("%f %f\n",discretegeometricaverage(1, 200, 10, 10, 0.25, 0.1),exp(-0.1)*sum);
 
 	file.close();
 

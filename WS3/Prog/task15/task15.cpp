@@ -25,7 +25,7 @@ double randomwalk(double z[]){
 	double dt=(double)T/M;
 
 	s[0]=szero;
-	w[0]=z[0];
+	w[0]=0;
 	double prod=1;
 
 	for(int i=1;i<=M;i++){
@@ -47,7 +47,7 @@ double brownianbridge(double z[]){
 	double dt=(double) T/M;
 
 	s[0]=szero;
-	w[0]=z[0];
+	w[0]=0;
 	w[M]=sqrt(T)*z[0];
 	double prod=1;
 
@@ -206,7 +206,7 @@ int main(){
 		rndwlk=0;
 		double res2=exp(-0.1)*SparseGridCC(i,M);
 		printf("%i %f %f %f\n",i,expected, res1,res2);
-		file << i << " "<< res1 << " "<< res2 << "\n";
+		file << i << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
 	}
 
 	file.close();

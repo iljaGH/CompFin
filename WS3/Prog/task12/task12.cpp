@@ -77,7 +77,8 @@ double sumsimplex(int level, int d){
 int main(){
 	std::ofstream file;
 	int level=4;
-	file.open("data.dat");
+	file.open("task12.dat");
+	file << "#dimension | number of points sparse grid | number of points full grid\n";
 
 	for(int d=1;d<=10;d++){
 		printf("%i\n",d);

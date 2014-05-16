@@ -20,7 +20,7 @@ double randomwalk(int T, int M, int S0, int K, double sigma, double r){
 	double dt=(double)T/M;
 
 	s[0]=S0;
-	w[0]=gsl_ran_ugaussian(rng);
+	w[0]=0;
 
 	for(int i=1;i<=M;i++){
 		w[i]=w[i-1]+sqrt(dt)*gsl_ran_ugaussian(rng);
@@ -37,7 +37,7 @@ double brownianbridge(int T, int M, int S0, int K, double sigma, double r){
 	double dt=(double) T/M;
 
 	s[0]=S0;
-	w[0]=gsl_ran_ugaussian(rng);
+	w[0]=0;
 	w[M]=sqrt(T)*gsl_ran_ugaussian(rng);
 
 	//for each level do: if nodeindex is odd (not calculated yet): use formula

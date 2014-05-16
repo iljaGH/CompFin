@@ -351,7 +351,12 @@ int main(){
 		for(int l=1;l<10;l++){
 			printf("d=%i level %i\n",d,l);
 			//PRODUCT RULE DAUERT SO LANGE AAAAAAAAAAAAAAAAAH!!!!
-			file << l << " "<<std::abs(MC(l,d)-expected)/expected<< " "<<std::abs(QMC(l,d)-expected)/expected<< " "<<std::abs(SparseGridCC(l,d)-expected)/expected<< " "<<0/*std::abs(ProductRuleCC(l,d)-expected)/expected*/<< " "<<std::abs(SparseGridTrapezoidal(l,d)-expected)/expected<< " "<<0/*std::abs(ProductRuleTrapezoidal(l,d)-expected)/expected*/<< "\n";
+			double prodcc=0,prodtrap=0;
+			if(l<3){
+				prodcc=std::abs(ProductRuleCC(l,d)-expected)/expected;
+				prodtrap=std::abs(ProductRuleTrapezoidal(l,d)-expected)/expected;
+			}
+			file << l << " "<<std::abs(MC(l,d)-expected)/expected<< " "<<std::abs(QMC(l,d)-expected)/expected<< " "<<std::abs(SparseGridCC(l,d)-expected)/expected<< " "<<prodcc<< " "<<std::abs(SparseGridTrapezoidal(l,d)-expected)/expected<< " "<<prodtrap<< "\n";
 		}
 
 		file.close();

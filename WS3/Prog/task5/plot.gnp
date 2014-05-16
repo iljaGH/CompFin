@@ -1,0 +1,16 @@
+set terminal postscript eps color;
+set out '../../LaTeX/task5_1.eps';
+set title "integrand for discrete arithmetic average, M=2, S(0)=10, r=0.1, sigma=0.25, T=1, K=10";
+f(x,y)=0.5*(10*exp((0.1-0.5*0.25**2)*1+0.25*1*x)+10*exp((0.1-0.5*0.25**2)*1+0.25*1*y))-10;
+set xlabel "x";
+set ylabel "y";
+splot f(x,y) notitle;
+
+set terminal postscript eps color;
+set out '../../LaTeX/task5_2.eps';
+set title "integrand for discrete arithmetic average, M=2, S(0)=10, r=0.1, sigma=0.2, T=2, K=10";
+f(x,y)=0.5*(10*exp((0.1-0.5*0.2**2)*2+0.2*sqrt(2)*x)+10*exp((0.1-0.5*0.2**2)*2+0.25*sqrt(2)*y))-10;
+set xlabel "x";
+set ylabel "y";
+splot f(x,y) notitle;
+

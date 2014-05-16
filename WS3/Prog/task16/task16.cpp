@@ -25,7 +25,7 @@ double randomwalk(double z[]){
 	double dt=(double)T/M;
 
 	s[0]=szero;
-	w[0]=z[0];
+	w[0]=0;
 	double prod=1;
 
 	for(int i=1;i<=M;i++){
@@ -47,7 +47,7 @@ double brownianbridge(double z[]){
 	double dt=(double) T/M;
 
 	s[0]=szero;
-	w[0]=z[0];
+	w[0]=0;
 	w[M]=sqrt(T)*z[0];
 	double prod=1;
 
@@ -398,37 +398,54 @@ double QMC(int level, int d){
 	return sum/n;
 }
 
+double discretegeometricaverage(){
+	double dt=(double)T/M;
+
+	double T1=T-(M*(M-1)*(4*M+1))/(6.*M*M)*dt;
+	double T2=T-(M-1)/2.*dt;
+
+	double A=exp(-r*(T-T2)-sigma*sigma*(T2-T1)/2.);
+	double d=(log((double)szero/K)+(r-0.5*sigma*sigma)*T2)/(sigma*sqrt(T1));
+
+	return szero*A*gsl_cdf_gaussian_P(d+sigma*sqrt(T1),1)-K*exp(-r*T)*gsl_cdf_gaussian_P(d,1);
+}
 
 int main(){
 	int maxlevel =6;
 	std::ofstream file;
 	file.open("mc.dat");
+	file << "#level | error randomwalk | error brownian bridge\n";
 
-	for(int i=1;i<maxlevel;i++){
+	double expected=discretegeometricaverage();
+
+	for(int i=1;i<11;i++){
 		rndwlk=1;
 		double res1=exp(-0.1)*MC(i,M);
 		rndwlk=0;
 		double res2=exp(-0.1)*MC(i,M);
 		printf("%i %f %f\n",i,res1,res2);
-		file << i << " "<< res1 << " "<< res2 << "\n";
+		file << i << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
 	}
 
 	file.close();
 
 	file.open("qmc.dat");
+	file << "#level | error randomwalk | error brownian bridge\n";
 
-	for(int i=1;i<maxlevel;i++){
+
+	for(int i=1;i<11;i++){
 		rndwlk=1;
 		double res1=exp(-0.1)*QMC(i,M);
 		rndwlk=0;
 		double res2=exp(-0.1)*QMC(i,M);
 		printf("%i %f %f\n",i,res1,res2);
-		file << i << " "<< res1 << " "<< res2 << "\n";
+		file << i << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
 	}
 
 	file.close();
 
 	file.open("ccsparse.dat");
+	file << "#level | error randomwalk | error brownian bridge\n";
 
 	for(int i=1;i<maxlevel;i++){
 		rndwlk=1;
@@ -436,12 +453,13 @@ int main(){
 		rndwlk=0;
 		double res2=exp(-0.1)*SparseGridCC(i,M);
 		printf("%i %f %f\n",i,res1,res2);
-		file << i << " "<< res1 << " "<< res2 << "\n";
+		file << i << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
 	}
 
 	file.close();
 
 	file.open("ccproduct.dat");
+	file << "#level | error randomwalk | error brownian bridge\n";
 
 	for(int i=1;i<3;i++){
 		rndwlk=1;
@@ -449,12 +467,13 @@ int main(){
 		rndwlk=0;
 		double res2=exp(-0.1)*ProductRuleCC(i,M);
 		printf("%i %f %f\n",i,res1,res2);
-		file << i << " "<< res1 << " "<< res2 << "\n";
+		file << i << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
 	}
 
 	file.close();
 
-		file.open("trapsparse.dat");
+	file.open("trapsparse.dat");
+	file << "#level | error randomwalk | error brownian bridge\n";
 
 	for(int i=1;i<maxlevel;i++){
 		rndwlk=1;
@@ -462,12 +481,13 @@ int main(){
 		rndwlk=0;
 		double res2=exp(-0.1)*SparseGridTrapezoidal(i,M);
 		printf("%i %f %f\n",i,res1,res2);
-		file << i << " "<< res1 << " "<< res2 << "\n";
+		file << i << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
 	}
 
 	file.close();
 
 	file.open("trapproduct.dat");
+	file << "#level | error randomwalk | error brownian bridge\n";
 
 	for(int i=1;i<3;i++){
 		rndwlk=1;
@@ -475,7 +495,7 @@ int main(){
 		rndwlk=0;
 		double res2=exp(-0.1)*ProductRuleTrapezoidal(i,M);
 		printf("%i %f %f\n",i,res1,res2);
-		file << i << " "<< res1 << " "<< res2 << "\n";
+		file << i << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
 	}
 
 	file.close();

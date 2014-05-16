@@ -58,9 +58,7 @@ double tensor(int level[], vector<vector<double> > nodes, vector<vector<double> 
 	}
 }
 
-double sumall(int level, vector<vector<double> > nodes, vector<vector<double> > weights, int d){
-	std::ofstream file;
-	file.open("test");
+double sumall(int level, vector<vector<double> > nodes, vector<vector<double> > weights, int d, std::ofstream &file){
 	int k[d];
 
 	double sum=0;
@@ -85,13 +83,9 @@ double sumall(int level, vector<vector<double> > nodes, vector<vector<double> > 
 				break;
 		}
 	}
-	file.close();
 }
 
-double sumsimplex(int level, vector<vector<double> > nodes, vector<vector<double> > weights, int d){
-	std::ofstream file;
-	file.open("test");
-
+double sumsimplex(int level, vector<vector<double> > nodes, vector<vector<double> > weights, int d, std::ofstream &file){
 	//sum over simplex
 	int k[d+1];
 	int S=d;
@@ -118,10 +112,9 @@ double sumsimplex(int level, vector<vector<double> > nodes, vector<vector<double
 
 		}
 	}
-	file.close();
 }
 
-double SparseGridTrapezoidal(int level, int d){
+double SparseGridTrapezoidal(int level, int d, std::ofstream &file){
 	//init nodes,weights
 	vector<vector<double> > nodes;
 	nodes.resize(level+1);
@@ -149,10 +142,10 @@ double SparseGridTrapezoidal(int level, int d){
 		}
 
 	//sum over simplex
-	printf("%f\n",sumsimplex(level,nodes,weights,d));
+	printf("%f\n",sumsimplex(level,nodes,weights,d,file));
 }
 
-double ProductRuleTrapezoidal(int level, int d){
+double ProductRuleTrapezoidal(int level, int d, std::ofstream &file){
 	//init nodes,weights
 	vector<vector<double> > nodes;
 	nodes.resize(level+1);
@@ -181,10 +174,10 @@ double ProductRuleTrapezoidal(int level, int d){
 		}
 
 	//sum over simplex
-	printf("%f\n",sumall(level,nodes,weights,d));
+	printf("%f\n",sumall(level,nodes,weights,d,file));
 }
 
-double SparseGridCC(int level, int d){
+double SparseGridCC(int level, int d, std::ofstream &file){
 	//init nodes,weights
 	vector<vector<double> > nodes;
 	nodes.resize(level+1);
@@ -214,10 +207,10 @@ double SparseGridCC(int level, int d){
 		}
 
 	//sum over simplex
-	printf("%f\n",sumsimplex(level,nodes,weights,d));
+	printf("%f\n",sumsimplex(level,nodes,weights,d,file));
 }
 
-double ProductRuleCC(int level, int d){
+double ProductRuleCC(int level, int d, std::ofstream &file){
 	//init nodes,weights
 	vector<vector<double> > nodes;
 	nodes.resize(level+1);
@@ -247,11 +240,30 @@ double ProductRuleCC(int level, int d){
 		}
 
 	//sum over simplex
-	printf("%f\n",sumall(level,nodes,weights,d));
+	printf("%f\n",sumall(level,nodes,weights,d,file));
 }
 
 int main(){
-	SparseGridTrapezoidal(5,3);
+	std::ofstream file;
+	file.open("trap_5.dat");
+	file << "#nodes trapezoidal rule sparse grid level=5\n";
+	SparseGridTrapezoidal(5,3,file);
+	file.close();
+
+	file.open("trap_7.dat");
+	file << "#nodes trapezoidal rule sparse grid level=7\n";
+	SparseGridTrapezoidal(7,3,file);
+	file.close();
+
+	file.open("cc_5.dat");
+	file << "#nodes clenshaw-curtis rule sparse grid level=5\n";
+	SparseGridCC(5,3,file);
+	file.close();
+
+	file.open("cc_7.dat");
+	file << "#nodes clenshaw-curtis rule sparse grid level=7\n";
+	SparseGridCC(7,3,file);
+	file.close();
 
 	return 1;
 }

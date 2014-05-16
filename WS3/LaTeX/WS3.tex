@@ -16,6 +16,7 @@
 See task2.cpp for code.
 
 \section*{Task 3}
+As we can see, the number of timesteps does not affect the convergence at all.\\
 \includegraphics{task3_10.eps}\\
 \includegraphics{task3_200.eps}\\
 
@@ -25,7 +26,9 @@ See task4.cpp for code. The convergence is $N^{-0.5}$(????). The last increase i
 \includegraphics{task4.eps}\\
 
 \section*{Task 5}
-!!TODO!!
+See task5.cpp for code. The integrand of the discrete arithmetic average for $M=2$ looks like:\\
+\includegraphics{task5_1}\\
+\includegraphics{task5_2}\\
 
 \section*{Task 6}
 See task6.cpp for code.
@@ -81,5 +84,5 @@ See task14.cpp/task15.cpp
 \includegraphics{task17_qmc}\\
 
 \section*{Task 18}
-If the integrand is "nice" (i.e. smooth enough), we it is better to not use MC/QMC, since the other quadrature rules converge faster (even using full grids). Sparse grids are preferrable if we don't need to be 100\% accurate. If everything else fails MC/QMC works (but might converge slowly).
+It is almost always better to not use (Q)MC, since the other quadrature rules converge faster (even using full grids). Clenshaw-Curtis converges slightly faster than the Trapezoidal rule. In almost all cases sparse grids are preferrable Since they only give us a slightly worse convergences, but way less points of evaluation (see Task 12). But if everything else fails, (Q)MC works (but might converge slowly).
 \end{document}

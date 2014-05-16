@@ -63,6 +63,8 @@ int main(){
 
 	std::ofstream file;
 	file.open("halton.dat");
+	file << "#x y of first 100 Halton sequence members\n";
+
 
 	int n=100;
 	int d=2;
@@ -83,6 +85,7 @@ int main(){
 
 	file.close();
 	file.open("uniform.dat");
+	file << "#x y of 100 uniform numbers\n";
 
 	gsl_rng* r;
 	r=gsl_rng_alloc(gsl_rng_mt19937);
