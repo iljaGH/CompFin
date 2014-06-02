@@ -5,6 +5,7 @@
 #include <gsl/gsl_randist.h>
 #include <gsl/gsl_cdf.h>
 #include <fstream>
+#include <ctime>
 #define _USE_MATH_DEFINES
 #include <vector>
 #include <string>

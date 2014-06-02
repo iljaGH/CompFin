@@ -1,15 +1,19 @@
 set terminal postscript eps color;
-set out '../../LaTeX/task3_10.eps';
 set logscale;
-set title "convergence plot for fair value of discrete geometric average option, M=10";
-set ylabel "fair value";
-set xlabel "n";
-plot 'data10.dat' using 1:2 notitle with linespoints;
+set mxtics
+set mytics
+set style line 12 lc rgb '#ddccdd' lt 1 lw 1.5
+set style line 13 lc rgb '#ddccdd' lt 1 lw 0.5
+set grid xtics mxtics ytics mytics back ls 12, ls 13
 
-set terminal postscript eps color;
-set out '../../LaTeX/task3_200.eps';
-set logscale;
-set title "convergence plot for fair value of discrete geometric average option, M=200";
+set out '../../LaTeX/task3_10.eps';
+#set title "convergence plot for fair value of discrete geometric average option, M=10";
 set ylabel "fair value";
 set xlabel "n";
-plot 'data200.dat' using 1:2 notitle with linespoints;
+plot 'data10.dat' using 1:2 notitle with l;
+
+set out '../../LaTeX/task3_200.eps';
+#set title "convergence plot for fair value of discrete geometric average option, M=200";
+set ylabel "fair value";
+set xlabel "n";
+plot 'data200.dat' using 1:2 notitle with l;

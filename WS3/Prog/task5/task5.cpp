@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <fstream>
+#include <ctime>
 
 double discretearithmeticaverage(int T, int M, int S0, int K, double sigma, double r,gsl_rng* rng){
 

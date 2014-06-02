@@ -1,7 +1,9 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
+#include <vector>
 
+#if 0
 int isprime(int n){
 	for(int i=2;i<=sqrt(n);i++)
 		if(n%i==0)
@@ -9,15 +11,26 @@ int isprime(int n){
 
 	return 1;
 }
+#endif
 
-void primes(int primes[], int n){
-	int k=0,p=0;
-	while(k<n){
+void primes(std::vector<int> &primes, int n){
+	int p=1;
+	bool prime = true;
+
+	while(primes.size() < (size_t)n){
 		p++;
-		if(isprime(p)){
-			primes[k]=p;
-			k++;
+		prime = true;
+		for(size_t i=0;i<=primes.size();i++)
+		{
+			if(p%primes[i] == 0)
+				{
+					prime = false;
+					break;
+				}
 		}
+
+		if(prime)
+			primes.push_back(p);
 	}
 }
 
@@ -34,7 +47,7 @@ void vandercorput(double vdc[],int n, int p, int epsilon=12){
 }
 
 void halton(double** halton, int n, int d){
-	int prime[203];
+	std::vector<int> prime;
 	primes(prime,203);
 	double vdc[n];
 
@@ -67,7 +80,6 @@ int main(){
 	halton(halt,n,d);
 
 	print2darr(halt,n,d);
-		
 
 	return 1;
 }
