@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <fstream>
+#include <ctime>
 
 double discretegeometricaverage(int T, int M, int S0, int K, double sigma, double r){
 	double dt=(double)T/M;
