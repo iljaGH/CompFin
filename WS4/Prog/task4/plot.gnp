@@ -1,0 +1,29 @@
+set logscale;
+
+set terminal postscript eps color;
+set out '../../LaTeX/task4_mc_4.eps';
+set title "convergence plot for down-out MC rndwlk/BB, M=4";
+set ylabel "relative error";
+set xlabel "#nodes";
+plot 'mc_4.dat' using 1:2 with lines title "Randomwalk", 'mc_4.dat' using 1:3 with lines title "Brownian Bridge";
+
+set terminal postscript eps color;
+set out '../../LaTeX/task4_mc_64.eps';
+set title "convergence plot for down-out MC rndwlk/BB, M=64";
+set ylabel "relative error";
+set xlabel "#nodes";
+plot 'mc_64.dat' using 1:2 with lines title "Randomwalk", 'mc_64.dat' using 1:3 with lines title "Brownian Bridge";
+
+set terminal postscript eps color;
+set out '../../LaTeX/task4_mc_1024.eps';
+set title "convergence plot for down-out MC rndwlk/BB, M=1024";
+set ylabel "relative error";
+set xlabel "#nodes";
+plot 'mc_1024.dat' using 1:2 with lines title "Randomwalk", 'mc_1024.dat' using 1:3 with lines title "Brownian Bridge";
+
+set terminal postscript eps color;
+set out '../../LaTeX/task4_mc_256.eps';
+set title "convergence plot for down-out MC rndwlk/BB, M=256";
+set ylabel "relative error";
+set xlabel "#nodes";
+plot 'mc_256.dat' using 1:2 with lines title "Randomwalk", 'mc_256.dat' using 1:3 with lines title "Brownian Bridge";

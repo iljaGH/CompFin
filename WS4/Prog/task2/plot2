@@ -1,0 +1,6 @@
+set logscale;
+set title "convergence plot for QMC rndwlk/BB";
+set ylabel "relative error";
+set xlabel "#nodes (log)";
+plot 'qmc.dat' using 1:2 with lines title "Randomwalk", 'qmc.dat' using 1:3 with lines title "Brownian Bridge";
+pause -1;
