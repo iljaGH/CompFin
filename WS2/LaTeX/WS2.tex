@@ -1,10 +1,11 @@
 \documentclass[]{article}
 \usepackage{amsmath}
+\usepackage[margin=1.3cm]{geometry}
 \usepackage{amsthm}
 \usepackage{listings}
 \usepackage{graphicx} %for the fugures
 \usepackage{hyperref}
-\usepackage{cleveref} %for the cref command
+%\usepackage{cleveref} %for the cref command
 
 \title{Practical Lab Numerical Computing Computational Finance \\Bachelor-Worksheet 2}
 \author{Lukas Troska, Ilja Kalmykov}
@@ -23,18 +24,17 @@ due to the price of the call-option
 V_{call}\left(S,T\right) & = &\max \lbrace S(T)-K,0 \rbrace
 \end{eqnarray*}
 
-always being positive. See task1.cpp,
-task1.plot and \Cref{fig:Task1} for details.
+always being positive. See task1.cpp and plot for details.
 \begin{figure}[!ht]
-\input{task1Plot.tex}
+\centering
+\includegraphics{task1Plot}
 \caption{Mean-Estimate for the call-option prices for different values of
 $\sigma$.}
 \label{fig:Task1}
 \end{figure}
 
 
-\section*{Task 2} See task2.cpp for code. As we can see in the sample output
-lst. \ref{lst:Task2} below, the variance does not depend on $\Delta t$, since the
+\section*{Task 2} See task2.cpp for code. As we can see in the sample output below, the variance does not depend on $\Delta t$, since the
 small differences can be caused by the (relatively) small sample size of N=1000
 of the geometric brownian motions.
 \begin{lstlisting}[caption = estimated $\mu$ and $\sigma$ for
@@ -55,13 +55,20 @@ delta t = 2.000e+000 mean = 3.214e+000 variance = 3.885e+000
 \end{eqnarray*}
 
 \section*{Task 4}
-See task4.cpp, task4.plot and \cref{fig:Task4} for details. 
-
+See task4.cpp and plot for details. 
 \begin{figure}[!ht]
-\input{task4Plot.tex}
+\centering
+\includegraphics{task4Plot}
 \caption{Approximation of $E\left[V_{call}(S_T,0)\right]$.}
-\label{fig:Task4}
+\label{fig:Task4a}
 \end{figure}
+\begin{figure}[!ht]
+\centering
+\includegraphics{task4Plot_err}
+\caption{Convergence plot of approximation above.}
+\label{fig:Task4b}
+\end{figure}
+\clearpage
 
 \section*{Task 5} This formula is just a transformation. We have
 \[\Phi(x)=\dfrac{1}{\sqrt{2\pi}}\int_{-\infty}^x
@@ -122,32 +129,32 @@ new node as follows: if on level $l$ we have nodes $x_i,x_{i+1}$ at
 
 \section*{Task 9}
 See task9.cpp,
-task9.plot for implementation. The convergence plots can be found in
-\cref{fig:Task9}.
+task9.plot for implementation. The convergence plot can be found below.
 
 \begin{figure}[!ht]
-\input{task9Plot.tex}
-\caption{Relative error of different integration methods for
-$1+\gamma\exp\left(\frac{1}{2}x\right)$ on $\left[0,1\right]$.}
+\centering
+\includegraphics{task9Plot}
+\caption{Convergence plot for integration of $f(x)=1+0.1\cdot\exp(0.5\cdot x)$.}
 \label{fig:Task9}
 \end{figure}
+\clearpage
 
 \section*{Task 10} For the values
 $S(0)=10,\mu=0.1,\sigma=0.2,T=2$ and $K=0$ we get an expected value of $\approx
 12.21402758160169833921071994639$, for $K=10$ we get $\approx
-2.6528094900348809449924483895885184345427710615192314$. See task10.cpp,
-task10.plot for implementation. The convergence plots can be found in
-\cref{fig:Task10_0} and \cref{fig:Task10_10}.
+2.6528094900348809449924483895885184345427710615192314$. See task10.cpp for implementation. The convergence plots can be found below.
 
 \begin{figure}[!ht]
-\input{task10_0Plot.tex}
+\centering
+\includegraphics{task10Plot_0}
 \caption{Relative error of different integration methods for
 $f_{call}\circ \Phi^{-1}$ with $K = 0$.}
 \label{fig:Task10_0}
 \end{figure}
 
 \begin{figure}[!ht]
-\input{task10_10Plot.tex}
+\centering
+\includegraphics{task10Plot_10}
 \caption{Relative error of different integration methods for
 $f_{call}\circ \Phi^{-1}$ with $K = 10$.}
 \label{fig:Task10_10}

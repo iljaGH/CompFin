@@ -1,7 +1,9 @@
 set terminal postscript eps color;
+set grid;
+
 set out '../../LaTeX/task9.eps';
-set title "implied volatility plot for Lufthansa call option";
+#set title "implied volatility plot for Lufthansa call option";
 set ylabel "K";
 set xlabel "implied volatility";
-plot 'out.dat' using 1:2 notitle w l;
+plot 'out.dat' using 1:2 notitle w l lt -1 lw 1 lc 0;
 

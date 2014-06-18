@@ -1,9 +1,10 @@
 set logscale;
+set grid;
 
 set terminal postscript eps color;
 set out '../../LaTeX/task6.eps';
-set title "convergence plot for MC/QMC for lookback option, M=128,S(0)=10, K=10,T=1,sigma=.2,r=.05";
+#set title "convergence plot for MC/QMC for lookback option, M=128,S(0)=10, K=10,T=1,sigma=.2,r=.05";
 set ylabel "relative error";
 set xlabel "#nodes";
-plot 'task6.dat' using 1:2 with lines title "MC", 'task6.dat' using 1:3 with lines title "QMC";
+plot 'task6.dat' using 1:2 with lines title "MC" lt -1 lw 1 lc 0, 'task6.dat' using 1:3 with lines title "QMC" lt -1 lw 1 lc 1;
 

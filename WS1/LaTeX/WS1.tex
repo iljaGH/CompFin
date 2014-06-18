@@ -2,6 +2,7 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amssymb}
+\usepackage[margin=1.3cm]{geometry}
 \usepackage{graphicx}
 
 \title{Practical Lab Numerical Computing Computational Finance \\Bachelor-Worksheet 1}
@@ -69,11 +70,11 @@ good approximation of the difference of the cdf's value to 1 in that area.
 
 \section*{Task 6} For code see WS1T36.cpp.
 \begin{figure}[!ht]
+\centering
 \includegraphics{task6}
 \caption{Box-Muller method, 1000 samples}
 \label{fig:Task6}
 \end{figure}
-\clearpage
 
 \section*{Task 7} Let $g_1(u_1,u_2)=\sqrt{-2\log(u_1)}\cos(2\pi
 u_2),g_2(u_1,u_2)=\sqrt{-2\log(u_1)}\sin(2\pi u_2)$ be the transformation
@@ -132,23 +133,22 @@ correct. The computation is correct, too, since in the terms above and, with
 
 This shows that it yields the same result.
 
-\section*{Task 9}
-For code see WS1T49.cpp
-\section*{Task 6} For code see WS1T36.cpp.\\
+\section*{Task 9} For code see WS1T39.cpp.\\
 
 \begin{figure}[!ht]
+\centering
 \includegraphics{task9_mu}
 \caption{Estimation of $\mu$}
 \label{fig:Task9a}
 \end{figure}
 
-\section*{Task 6} For code see WS1T36.cpp.
 \begin{figure}[!ht]
+\centering
 \includegraphics{task9_sigma_mu}
 \caption{Estimation of $\sigma$ given $\mu$}
 \label{fig:Task9b}
 \end{figure}
-\clearpage
+
 Due to the plots the error functions for $\hat{\sigma}$ and $\hat{\mu}$
 $error(N) = \left|\sigma_n - \sigma\right| $ and $error(N) = \left|\mu_n -
 \mu\right| $ are approximately given by $error(N) \approx c\,N^{-\frac{1}{2}}$.
@@ -158,12 +158,14 @@ $error(N) = \left|\sigma_n - \sigma\right| $ and $error(N) = \left|\mu_n -
 \%/year.\\
 
 \begin{figure}[!ht]
+\centering
 \includegraphics{task10_w}
 \caption{3 Wiener processes with parameters $S(0)=10,\mu=0.1,\sigma=0.2,T=2$}
 \label{fig:Task10a}
 \end{figure}
 
 \begin{figure}[!ht]
+\centering
 \includegraphics{task10_s}
 \caption{corresponding asset prices}
 \label{fig:Task10b}

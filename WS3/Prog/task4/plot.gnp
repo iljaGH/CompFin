@@ -1,13 +1,8 @@
 set terminal postscript eps color;
 set logscale;
-set mxtics
-set mytics
-set style line 12 lc rgb '#ddccdd' lt 1 lw 1.5
-set style line 13 lc rgb '#ddccdd' lt 1 lw 0.5
-set grid xtics mxtics ytics mytics back ls 12, ls 13
 set out '../../LaTeX/task4.eps';
-set logscale;
+set grid;
 #set title "convergence plot for discrete geometric average";
 set ylabel "relative error";
 set xlabel "amount of timesteps M";
-plot 'data.dat' using 1:2 notitle with linespoints;
+plot 'data.dat' using 1:2 notitle with lines lt -1 lw 1 lc 0;

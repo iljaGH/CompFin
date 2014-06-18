@@ -1,36 +1,22 @@
-reset
-set terminal epslatex color
-set out 'task10_0Plot.tex'
+set terminal postscript eps color;
+set out '../LaTeX/task10Plot_10.eps';
+set logscale;
+set xlabel 'num nodes';
+set ylabel 'relative error';
+set grid;
+
+plot 'task10_10.dat' using 1:2 with lines lt -1 lw 1 lc 0 title 'monte-carlo', \
+'task10_10.dat' using 1:3 with lines lt -1 lw 1 lc 1 title 'trapezoidal', \
+'task10_10.dat' using 1:4 with lines lt -1 lw 1 lc 2 title 'clenshaw-curtis', \
+'task10_10.dat' using 1:5 with lines lt -1 lw 1 lc 3 title 'gauss-legendre'
+
+set terminal postscript eps color;
+set out '../LaTeX/task10Plot_0.eps';
 set logscale;
 set xlabel 'num nodes';
 set ylabel 'relative error';
 
-set style line 1 lc rgb '#8b1a0e' pt 6 ps 1 lt 1 lw 2 
-set style line 2 lc rgb '#5e9c36' pt 6 ps 1 lt 1 lw 2
-set style line 3 lc rgb 'blue' pt 6 ps 1 lt 1 lw 2
-set style line 4 lc rgb 'black' pt 6 ps 1 lt 1 lw 2
-
-set style line 11 lc rgb '#ffffff' lt 1
-set border 0 back ls 11
-#set tics out nomirror scale 0,0.001
-#set format ''
-
-set mxtics
-set mytics
-set style line 12 lc rgb '#ddccdd' lt 1 lw 1.5
-set style line 13 lc rgb '#ddccdd' lt 1 lw 0.5
-set grid xtics mxtics ytics mytics back ls 12, ls 13
-
-plot 'task10_10.dat' using 1:2 with lp ls 1 title 'monte-carlo', \
-'task10_10.dat' using 1:3 with lp ls 2 title 'trapezoidal', \
-'task10_10.dat' using 1:4 with lp ls 3 title 'clenshaw-curtis', \
-'task10_10.dat' using 1:5 with lp ls 4 title 'gauss-legendre'
-set out
-
-set out 'task10_10Plot.tex'
-
-plot 'task10_0.dat' using 1:2 with lp ls 1 title 'monte-carlo', \
-'task10_0.dat' using 1:3 with lp ls 2 title 'trapezoidal', \
-'task10_0.dat' using 1:4 with lp ls 3 title 'clenshaw-curtis', \
-'task10_0.dat' using 1:5 with lp ls 4 title 'gauss-legendre'
-set out
+plot 'task10_0.dat' using 1:2 with lines lt -1 lw 1 lc 0 title 'monte-carlo', \
+'task10_0.dat' using 1:3 with lines lt -1 lw 1 lc 1 title 'trapezoidal', \
+'task10_0.dat' using 1:4 with lines lt -1 lw 1 lc 2 title 'clenshaw-curtis', \
+'task10_0.dat' using 1:5 with lines lt -1 lw 1 lc 3 title 'gauss-legendre'

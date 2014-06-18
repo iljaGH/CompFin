@@ -58,7 +58,7 @@ int main(){
 	file.precision(3);
 	file.setf(std::ios::scientific);
 
-	int maxlevel=10;
+	int maxlevel=13;
 	//K=0
 	file.open("task10_0.dat");
 	file << "K=0 #t monte-carlo trapezoidal clenshaw-curtis gauss-legendre\n";
@@ -68,7 +68,7 @@ int main(){
 
 	for(int l=1;l<=maxlevel;++l)
 	{
-		file << pow(2,l) << " "
+		file << pow(2,l)-1 << " "
 				<< std::abs(expected-quadrature(l,montecarlo,f,(void*)(&params)))/expected<<" "
 				<< std::abs(expected-quadrature(l,trapezoidal,f,(void*)(&params)))/expected<<" "
 				<< std::abs(expected-quadrature(l,cc,f,(void*)(&params)))/expected<<" "
@@ -86,7 +86,7 @@ int main(){
 
 	for(int l=1;l<=maxlevel;++l)
 		{
-			file << pow(2,l) << " "
+			file << pow(2,l)-1 << " "
 					<< std::abs(expected-quadrature(l,montecarlo,f,(void*)(&params2)))/expected<<" "
 					<< std::abs(expected-quadrature(l,trapezoidal,f,(void*)(&params2)))/expected<<" "
 					<< std::abs(expected-quadrature(l,cc,f,(void*)(&params2)))/expected<<" "

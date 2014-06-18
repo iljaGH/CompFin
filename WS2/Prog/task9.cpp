@@ -7,7 +7,7 @@ double f(double x, void * params){
 }
 
 int main(){
-	int maxlevel=10;
+	int maxlevel=14;
 	double expected=2.0*exp(0.5)-1.0;
 	double parameters = 0.0;
 
@@ -20,7 +20,7 @@ int main(){
 
 	for(int l=1;l<=maxlevel;++l)
 	{
-		file << pow(2,l) << " "
+		file << pow(2,l)-1 << " "
 				<< std::abs(expected-quadrature(l,montecarlo,f,(void*)(&parameters)))/expected<<" "
 				<< std::abs(expected-quadrature(l,trapezoidal,f,(void*)(&parameters)))/expected<<" "
 				<< std::abs(expected-quadrature(l,cc,f,(void*)(&parameters)))/expected<<" "
