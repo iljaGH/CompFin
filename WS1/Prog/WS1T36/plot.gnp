@@ -1,0 +1,8 @@
+set terminal postscript eps color;
+set out '../../LaTeX/task6.eps';
+set grid
+set xlabel 'z1'
+set ylabel 'z2'
+plot 'task6.dat' using 1:2 notitle
+set xtic auto
+set ytic auto

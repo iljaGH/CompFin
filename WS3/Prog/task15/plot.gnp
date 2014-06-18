@@ -1,8 +1,10 @@
 set terminal postscript eps color;
+set grid;
+set logscale;
 #set object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb"light-gray" behind
 set out '../../LaTeX/task15.eps';
-set title "convergence plot for CC SparseGrid rndwlk/BB";
+#set title "convergence plot for CC SparseGrid rndwlk/BB";
 set ylabel "relative error";
-set xlabel "level";
+set xlabel "nodes";
 set logscale y;
-plot 'task15.dat' using 1:2 with lines title "Randomwalk", 'task15.dat' using 1:3 with lines title "Brownian Bridge";
+plot 'task15.dat' using 1:2 with lines title "Randomwalk" lt -1 lw 2 lc 0, 'task15.dat' using 1:3 with lines title "Brownian Bridge" lt -1 lw 2 lc 1;

@@ -10,6 +10,9 @@
 #include <string>
 using std::vector;
 
+int counter=0;
+int sumcounter;
+
 double f(double x){
 	return 1+0.1*exp(x/2.);
 }
@@ -34,7 +37,7 @@ double tensor(int level[], vector<vector<double> > nodes, vector<vector<double> 
 			prod*=f(nodes[level[i]][k[i]]);
 		}
 		sum+=weight*prod;
-
+		counter++;
 		//reset weight
 		weight=1;
 		prod=1;
@@ -96,10 +99,13 @@ double sumsimplex(int level, vector<vector<double> > nodes, vector<vector<double
 		k[i]=1;
 
 	double sum=0;
+	sumcounter=0;
 
 	while(1){
 		//call tensor function with given levels
 		sum+=tensor(k,nodes,weights,d);
+		sumcounter+=counter;
+		counter=0;
 
 		for(int j=1;j<=d;j++){
 			k[j]++;
@@ -335,31 +341,44 @@ double QMC(int level, int d){
 }
 
 int main(){
-	std::ofstream file;
+	std::ofstream file, fileSparse,fileProd;
 	int maxlevel=10;
 
 	for(int d=1;d<=8;d*=2){
 		switch(d){
-			case 1: file.open("d1.dat");break;
-			case 2: file.open("d2.dat");break;
-			case 4: file.open("d4.dat");break;
-			case 8: file.open("d8.dat");break;
+			case 1: file.open("d1.dat");fileSparse.open("d1S.dat");fileProd.open("d1P.dat");break;
+			case 2: file.open("d2.dat");fileSparse.open("d2S.dat");fileProd.open("d2P.dat");break;
+			case 4: file.open("d4.dat");fileSparse.open("d4S.dat");fileProd.open("d4P.dat");break;
+			case 8: file.open("d8.dat");fileSparse.open("d8S.dat");fileProd.open("d8P.dat");break;
 		}
 
-		double expected=pow(1.12974,d);
-		file << "#level MC QMC SGCC PGCC SGT PGT d="<<d<<"\n";
-		for(int l=1;l<10;l++){
+		double expected=pow(1.1297442541400256293697301575628327143,d);
+		file << "#nodes MC QMC d="<<d<<"\n";
+		fileSparse << "#nodes SGCC SGT d="<<d<<"\n";
+		fileProd << "#nodes PGCC PGT d="<<d<<"\n";
+
+		for(int l=1;l<16;l++){
 			printf("d=%i level %i\n",d,l);
 			//PRODUCT RULE DAUERT SO LANGE AAAAAAAAAAAAAAAAAH!!!!
 			double prodcc=0,prodtrap=0;
-			if(l<3){
+			if((d==1 && l<10) || (d==2 && l<7) || (d==4 && l<5) || (d==8 && l<3)) {
 				prodcc=std::abs(ProductRuleCC(l,d)-expected)/expected;
 				prodtrap=std::abs(ProductRuleTrapezoidal(l,d)-expected)/expected;
 			}
-			file << l << " "<<std::abs(MC(l,d)-expected)/expected<< " "<<std::abs(QMC(l,d)-expected)/expected<< " "<<std::abs(SparseGridCC(l,d)-expected)/expected<< " "<<prodcc<< " "<<std::abs(SparseGridTrapezoidal(l,d)-expected)/expected<< " "<<prodtrap<< "\n";
-		}
+			if(prodcc!=0)
+				fileProd << pow(pow(2,l)-1,d) << " " <<prodcc<< " "<<prodtrap<< "\n";
+
+			file << pow(2,l)-1 << " "<<std::abs(MC(l,d)-expected)/expected<< " "<<std::abs(QMC(l,d)-expected)/expected<< "\n";
+
+			if((d==1)||(d==2 && l<13)||(d==4 && l<10) || (d==8 && l<9)){
+				double temp=SparseGridCC(l,d);
+				fileSparse << sumcounter << " "<<std::abs(temp-expected)/expected<<" "<< std::abs(SparseGridTrapezoidal(l,d)-expected)/expected<< "\n";
+			}
+		}	
 
 		file.close();
+		fileSparse.close();
+		fileProd.close();
 	}
 
 

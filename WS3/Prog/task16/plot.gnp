@@ -1,61 +1,56 @@
-set xrange [0:10]
+set logscale;
+set grid;
 
 set terminal postscript eps color;
 #set object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb"light-gray" behind
 set out '../../LaTeX/task16_mc.eps';
-set title "convergence plot for MC rndwlk/BB";
+#set title "convergence plot for MC rndwlk/BB";
 set ylabel "relative error";
-set xlabel "level";
-set xtics 0,1,10
+set xlabel "nodes";
 set logscale y;
-plot 'mc.dat' using 1:2 with lines title "Randomwalk", 'mc.dat' using 1:3 with lines title "Brownian Bridge";
+plot 'mc.dat' using 1:2 with lines lt -1 lw 2 lc 0 title "Randomwalk", 'mc.dat' using 1:3 with lines lt -1 lw 2 lc 1 title "Brownian Bridge";
 
 set terminal postscript eps color;
 #set object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb"light-gray" behind
 set out '../../LaTeX/task16_qmc.eps';
-set title "convergence plot for QMC rndwlk/BB";
+#set title "convergence plot for QMC rndwlk/BB";
 set ylabel "relative error";
-set xlabel "level";
-set xtics 0,1,10
+set xlabel "nodes";
 set logscale y;
-plot 'qmc.dat' using 1:2 with lines title "Randomwalk", 'qmc.dat' using 1:3 with lines title "Brownian Bridge";
+plot 'qmc.dat' using 1:2 with lines lt -1 lw 2 lc 0 title "Randomwalk", 'qmc.dat' using 1:3 with lines lt -1 lw 2 lc 1 title "Brownian Bridge";
 
 set terminal postscript eps color;
 #set object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb"light-gray" behind
 set out '../../LaTeX/task16_ccsparse.eps';
-set title "convergence plot for CCSparseGrid rndwlk/BB";
+#set title "convergence plot for CCSparseGrid rndwlk/BB";
 set ylabel "relative error";
-set xlabel "level";
-set xtics 0,1,10
+set xlabel "nodes";
 set logscale y;
-plot 'ccsparse.dat' using 1:2 with lines title "Randomwalk", 'ccsparse.dat' using 1:3 with lines title "Brownian Bridge";
+plot 'ccsparse.dat' using 1:2 with lines lt -1 lw 2 lc 0 title "Randomwalk", 'ccsparse.dat' using 1:3 with lines lt -1 lw 2 lc 1 title "Brownian Bridge";
 
 set terminal postscript eps color;
 #set object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb"light-gray" behind
 set out '../../LaTeX/task16_ccprod.eps';
-set title "convergence plot for CCProductGrid rndwlk/BB";
+#set title "convergence plot for CCProductGrid rndwlk/BB";
 set ylabel "relative error";
-set xlabel "level";
-set xtics 0,1,10
+set xlabel "nodes";
 set logscale y;
-plot 'ccproduct.dat' using 1:2 with lines title "Randomwalk", 'ccproduct.dat' using 1:3 with lines title "Brownian Bridge";
+plot 'ccproduct.dat' using 1:2 with lines lt -1 lw 2 lc 0 title "Randomwalk", 'ccproduct.dat' using 1:3 with lines lt -1 lw 2 lc 1 title "Brownian Bridge";
 
 set terminal postscript eps color;
 #set object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb"light-gray" behind
 set out '../../LaTeX/task16_trapsparse.eps';
-set title "convergence plot for TrapezoidSparseGrid rndwlk/BB";
+#set title "convergence plot for TrapezoidSparseGrid rndwlk/BB";
 set ylabel "relative error";
-set xlabel "level";
-set xtics 0,1,10
+set xlabel "nodes";
 set logscale y;
-plot 'trapsparse.dat' using 1:2 with lines title "Randomwalk", 'trapsparse.dat' using 1:3 with lines title "Brownian Bridge";
+plot 'trapsparse.dat' using 1:2 with lines lt -1 lw 2 lc 0 title "Randomwalk", 'trapsparse.dat' using 1:3 with lines lt -1 lw 2 lc 1 title "Brownian Bridge";
 
 set terminal postscript eps color;
 #set object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb"light-gray" behind
 set out '../../LaTeX/task16_trapprod.eps';
-set title "convergence plot for TrapezoidProductGrid rndwlk/BB";
+#set title "convergence plot for TrapezoidProductGrid rndwlk/BB";
 set ylabel "relative error";
-set xlabel "level";
-set xtics 0,1,10
+set xlabel "nodes";
 set logscale y;
-plot 'trapproduct.dat' using 1:2 with lines title "Randomwalk", 'trapproduct.dat' using 1:3 with lines title "Brownian Bridge";
+plot 'trapproduct.dat' using 1:2 with lines lt -1 lw 2 lc 0 title "Randomwalk", 'trapproduct.dat' using 1:3 with lines lt -1 lw 2 lc 1 title "Brownian Bridge";

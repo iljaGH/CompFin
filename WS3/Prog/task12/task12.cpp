@@ -10,6 +10,9 @@
 #include <string>
 using std::vector;
 
+int counter=0;
+int sumcounter=0;
+
 double f(double x){
 	return 1+0.1*exp(x/2.);
 }
@@ -28,6 +31,7 @@ double tensor(int level[], int d){
 	while(1){
 
 		sum++;
+		counter++;
 
 		for(int j=1;j<=d;j++){
 			k[j]++;
@@ -53,10 +57,13 @@ double sumsimplex(int level, int d){
 		k[i]=1;
 
 	double sum=0;
+	sumcounter=0;
 
 	while(1){
 		//call tensor function with given levels
 		sum+=tensor(k,d);
+		sumcounter+=counter;
+		counter=0;
 
 		for(int j=1;j<=d;j++){
 			k[j]++;
@@ -82,9 +89,11 @@ int main(){
 
 	for(int d=1;d<=10;d++){
 		printf("%i\n",d);
-		file << d << " " << sumsimplex(level,d)<<" " << pow(pow(2,level)-1,d)<<"\n";
+		file << d << " "  <<sumsimplex(level,d)<<" " << pow(pow(2,level)-1,d)<<"\n";
 
 	}
+
+		printf("%f\n",sumsimplex(6,8));
 	file.close();
 
 

@@ -413,11 +413,11 @@ double discretegeometricaverage(){
 
 
 int main(){
-	int maxlevel =10;
+	int maxlevel =20;
 	std::ofstream file;
 	file.open("mc.dat");
 	double expected=discretegeometricaverage();
-	file << "#level | error randomwalk | error brownian bridge\n";
+	file << "#nodes | error randomwalk | error brownian bridge\n";
 
 	for(int i=1;i<maxlevel;i++){
 		rndwlk=1;
@@ -426,13 +426,13 @@ int main(){
 		rndwlk=0;
 		double res2=exp(-0.1)*MC(i,M);
 		printf("%i %f %f %f\n",i,expected,res1,res2);
-		file << i << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
+		file << pow(2,i)-1 << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
 	}
 
 	file.close();
 
 	file.open("qmc.dat");
-	file << "#level | error randomwalk | error brownian bridge\n";
+	file << "#nodes | error randomwalk | error brownian bridge\n";
 
 	for(int i=1;i<maxlevel;i++){
 		rndwlk=1;
@@ -440,7 +440,7 @@ int main(){
 		rndwlk=0;
 		double res2=exp(-0.1)*QMC(i,M);
 		printf("%i %f %f %f\n",i,expected,res1,res2);
-		file << i << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
+		file << pow(2,i)-1 << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
 	}
 
 	file.close();

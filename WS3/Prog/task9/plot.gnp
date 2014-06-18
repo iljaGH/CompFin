@@ -1,20 +1,21 @@
+set size square;
 set terminal postscript eps color;
 set out '../../LaTeX/task9_gauss.eps';
-set title "product rule grid for Gauss-Legendre at level=5";
+#set title "product rule grid for Gauss-Legendre at level=5";
 set ylabel "y";
 set xlabel "x";
 plot 'gausslegendre.dat' using 1:2 notitle;
 
 set terminal postscript eps color;
 set out '../../LaTeX/task9_cc.eps';
-set title "product rule grid for Clenshaw Curtis at level=5";
+#set title "product rule grid for Clenshaw Curtis at level=5";
 set ylabel "y";
 set xlabel "x";
 plot 'cc.dat' using 1:2 notitle;
 
 set terminal postscript eps color;
 set out '../../LaTeX/task9_trapezoidal.eps';
-set title "product rule grid for trapezoidal rule at level=5";
+#set title "product rule grid for trapezoidal rule at level=5";
 set ylabel "y";
 set xlabel "x";
 plot 'trapezoidal.dat' using 1:2 notitle;

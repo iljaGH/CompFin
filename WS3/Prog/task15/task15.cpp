@@ -19,6 +19,7 @@ int szero=10;
 double r=.1;
 double sigma=.25;
 int rndwlk=1;
+int counter=0;
 
 double randomwalk(double z[]){
 
@@ -96,6 +97,7 @@ double tensor(int level[], vector<vector<double> > nodes, vector<vector<double> 
 			x[i-1]=nodes[level[i]][k[i]];
 		}
 		sum+=weight*f(x);
+		counter++;
 
 		//reset weight
 		weight=1;
@@ -200,14 +202,15 @@ int main(){
 	std::ofstream file;
 	file.open("task15.dat");
 	double expected=discretegeometricaverage();
-	file << "#level rndwlk bb\n";
-	for(int i=1;i<6;i++){
+	file << "#nodes rndwlk bb\n";
+	for(int i=1;i<8;i++){
 		rndwlk=1;
 		double res1=exp(-0.1)*SparseGridCC(i,M);
 		rndwlk=0;
+		counter=0;
 		double res2=exp(-0.1)*SparseGridCC(i,M);
 		printf("%i %f %f %f\n",i,expected, res1,res2);
-		file << i << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
+		file << counter << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
 	}
 
 	file.close();

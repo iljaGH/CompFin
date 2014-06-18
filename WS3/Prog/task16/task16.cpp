@@ -9,6 +9,7 @@
 #define _USE_MATH_DEFINES
 #include <vector>
 #include <string>
+#include <unistd.h>
 using std::vector;
 
 //keine Lust in den Funktionen rumzuwühlen, deshalb globale Variablen
@@ -19,6 +20,8 @@ int szero=10;
 double r=.1;
 double sigma=.25;
 int rndwlk=1;
+int counter=0;
+int sumcounter=0;
 
 double randomwalk(double z[]){
 
@@ -96,6 +99,7 @@ double tensor(int level[], vector<vector<double> > nodes, vector<vector<double> 
 			x[i-1]=nodes[level[i]][k[i]];
 		}
 		sum+=weight*f(x);
+		counter++;
 
 		//reset weight
 		weight=1;
@@ -157,10 +161,13 @@ double sumsimplex(int level, vector<vector<double> > nodes, vector<vector<double
 		k[i]=1;
 
 	double sum=0;
+	sumcounter=0;
 
 	while(1){
 		//call tensor function with given levels
 		sum+=tensor(k,nodes,weights,d);
+		sumcounter+=counter;
+		counter=0;
 
 		for(int j=1;j<=d;j++){
 			k[j]++;
@@ -349,7 +356,7 @@ void primes(int primes[], int n){
 	}
 }
 
-void vandercorput(double vdc[],int n, int p, int epsilon=12){
+void vandercorput(vector<double>& vdc,int n, int p, int epsilon=12){
 	vdc[0]=0;
 	for(int i=1;i<n;i++){
 		double z=1-vdc[i-1];
@@ -361,10 +368,10 @@ void vandercorput(double vdc[],int n, int p, int epsilon=12){
 	}
 }
 
-void halton(double** halton, int n, int d){
+void halton(vector< vector<double> > & halton, int n, int d){
 	int prime[d+3];
 	primes(prime,d+3);
-	double vdc[n+500];
+	vector<double> vdc(n+500);
 
 	for(int i=0;i<d;i++)
 	{
@@ -380,9 +387,7 @@ double QMC(int level, int d){
 	double sum=0;
 	double prod=1;
 
-	double *halt[n];
-	for(int i=0;i<n;i++)
-		halt[i]=new double[d];
+	vector< vector<double> > halt(n, vector<double>(d));
 
 	halton(halt,n,d);
 
@@ -415,52 +420,52 @@ int main(){
 	int maxlevel =6;
 	std::ofstream file;
 	file.open("mc.dat");
-	file << "#level | error randomwalk | error brownian bridge\n";
+	file << "#nodes | error randomwalk | error brownian bridge\n";
 
 	double expected=discretegeometricaverage();
-
-	for(int i=1;i<11;i++){
+	for(int i=1;i<20;i++){
 		rndwlk=1;
 		double res1=exp(-0.1)*MC(i,M);
 		rndwlk=0;
 		double res2=exp(-0.1)*MC(i,M);
 		printf("%i %f %f\n",i,res1,res2);
-		file << i << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
+		file << pow(2,i)-1 << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
 	}
 
 	file.close();
 
 	file.open("qmc.dat");
-	file << "#level | error randomwalk | error brownian bridge\n";
+	file << "#nodes | error randomwalk | error brownian bridge\n";
 
 
-	for(int i=1;i<11;i++){
+	for(int i=1;i<15;i++){
 		rndwlk=1;
 		double res1=exp(-0.1)*QMC(i,M);
 		rndwlk=0;
 		double res2=exp(-0.1)*QMC(i,M);
 		printf("%i %f %f\n",i,res1,res2);
-		file << i << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
+		file << pow(2,i)-1 << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
 	}
 
 	file.close();
 
 	file.open("ccsparse.dat");
-	file << "#level | error randomwalk | error brownian bridge\n";
+	file << "#nodes | error randomwalk | error brownian bridge\n";
 
 	for(int i=1;i<maxlevel;i++){
 		rndwlk=1;
 		double res1=exp(-0.1)*SparseGridCC(i,M);
 		rndwlk=0;
+		counter=0;
 		double res2=exp(-0.1)*SparseGridCC(i,M);
 		printf("%i %f %f\n",i,res1,res2);
-		file << i << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
+		file << sumcounter << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
 	}
 
 	file.close();
 
 	file.open("ccproduct.dat");
-	file << "#level | error randomwalk | error brownian bridge\n";
+	file << "#nodes | error randomwalk | error brownian bridge\n";
 
 	for(int i=1;i<3;i++){
 		rndwlk=1;
@@ -468,27 +473,28 @@ int main(){
 		rndwlk=0;
 		double res2=exp(-0.1)*ProductRuleCC(i,M);
 		printf("%i %f %f\n",i,res1,res2);
-		file << i << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
+		file << pow(pow(2,i)-1,M) << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
 	}
 
 	file.close();
 
 	file.open("trapsparse.dat");
-	file << "#level | error randomwalk | error brownian bridge\n";
+	file << "#nodes | error randomwalk | error brownian bridge\n";
 
 	for(int i=1;i<maxlevel;i++){
 		rndwlk=1;
 		double res1=exp(-0.1)*SparseGridTrapezoidal(i,M);
 		rndwlk=0;
+		counter=0;
 		double res2=exp(-0.1)*SparseGridTrapezoidal(i,M);
 		printf("%i %f %f\n",i,res1,res2);
-		file << i << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
+		file << sumcounter << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
 	}
 
 	file.close();
 
 	file.open("trapproduct.dat");
-	file << "#level | error randomwalk | error brownian bridge\n";
+	file << "#nodes | error randomwalk | error brownian bridge\n";
 
 	for(int i=1;i<3;i++){
 		rndwlk=1;
@@ -496,7 +502,7 @@ int main(){
 		rndwlk=0;
 		double res2=exp(-0.1)*ProductRuleTrapezoidal(i,M);
 		printf("%i %f %f\n",i,res1,res2);
-		file << i << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
+		file << pow(pow(2,i)-1,M) << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
 	}
 
 	file.close();

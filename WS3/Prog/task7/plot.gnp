@@ -1,4 +1,6 @@
 set terminal postscript eps color;
+set size square;
+set grid;
 set out '../../LaTeX/task7_halton.eps';
 set xrange [0:1];
 set yrange [0:1];
