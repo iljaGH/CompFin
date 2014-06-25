@@ -7,6 +7,39 @@
 #include <fstream>
 #include <ctime>
 
+int T=1;
+int M=2;
+int K=10;
+int szero=10;
+double r=0.1;
+double sigma=0.25;
+
+double randomwalk(double z[]){
+
+	double w[M+1],s[M+1];
+	double dt=(double)T/M;
+
+	s[0]=szero;
+	w[0]=0;
+
+	for(int i=1;i<=M;i++){
+		w[i]=w[i-1]+sqrt(dt)*z[i-1];
+		s[i]=s[0]*exp((r-0.5*sigma*sigma)*i*dt+sigma*w[i]);
+	}
+
+	return std::max(0.5*(s[1]+s[2])-K,(double) 0);
+}
+
+double f(double x[]){
+	for(int i=0;i<M;i++){
+		x[i]=gsl_cdf_gaussian_Pinv(x[i],1);
+	}
+
+
+		return randomwalk(x);
+
+}
+
 double discretearithmeticaverage(int T, int M, int S0, int K, double sigma, double r,gsl_rng* rng){
 
 	double w[M+1],s[M+1];
@@ -47,15 +80,18 @@ double continuousgeometricaverage(int T, int szero, int K, double sigma, double 
 int main(){
 	std::ofstream file;
 	file.open("task5.dat");
+	int num=100;
+	double delta=1./num;
 
-	gsl_rng* r;
-	r=gsl_rng_alloc(gsl_rng_mt19937);
-	gsl_rng_set(r,time(NULL));
+	for(int i=1;i<num;i++)
+		for(int j=1;j<num;j++){
+			double x[M];
+			x[0]=i*delta;
+			x[1]=j*delta;
 
-	double sum=0;
-	for(int i=0;i<50;i++)
-		sum+=discretearithmeticaverage(1,10,10,10,.25,.1,r);
-	printf("%f\n",sum/50);
+			file << delta*i << " " << delta*j << " "<<f(x)<<"\n";
+		}
+
 
 	file.close();
 
