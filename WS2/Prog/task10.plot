@@ -1,7 +1,7 @@
 set terminal postscript eps color;
 set out '../LaTeX/task10Plot_10.eps';
 set logscale;
-set xlabel 'num nodes';
+set xlabel 'N nodes';
 set ylabel 'relative error';
 set grid;
 
@@ -13,7 +13,7 @@ plot 'task10_10.dat' using 1:2 with lines lt -1 lw 1 lc 0 title 'monte-carlo', \
 set terminal postscript eps color;
 set out '../LaTeX/task10Plot_0.eps';
 set logscale;
-set xlabel 'num nodes';
+set xlabel 'N nodes';
 set ylabel 'relative error';
 
 plot 'task10_0.dat' using 1:2 with lines lt -1 lw 1 lc 0 title 'monte-carlo', \

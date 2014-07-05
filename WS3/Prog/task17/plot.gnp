@@ -7,7 +7,7 @@ set out '../../LaTeX/task17_mc.eps';
 set ylabel "relative error";
 set xlabel "nodes";
 set logscale y;
-plot 'mc.dat' using 1:2 with lines title "Randomwalk" lt -1 lw 2 lc 0, 'mc.dat' using 1:3 with lines title "Brownian Bridge" lt -1 lw 2 lc 1;
+plot 'mc.dat' using 1:2 with lines title "Randomwalk" lt -1 lw 1 lc 0, 'mc.dat' using 1:3 with lines title "Brownian Bridge" lt -1 lw 1 lc 1;
 
 set logscale;
 set terminal postscript eps color;
@@ -17,4 +17,4 @@ set out '../../LaTeX/task17_qmc.eps';
 set ylabel "relative error";
 set xlabel "nodes";
 set logscale y;
-plot 'qmc.dat' using 1:2 with lines title "Randomwalk" lt -1 lw 2 lc 0, 'qmc.dat' using 1:3 with lines title "Brownian Bridge" lt -1 lw 2 lc 1;
+plot 'qmc.dat' using 1:2 with lines title "Randomwalk" lt -1 lw 1 lc 0, 'qmc.dat' using 1:3 with lines title "Brownian Bridge" lt -1 lw 1 lc 1;

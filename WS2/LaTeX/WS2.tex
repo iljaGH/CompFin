@@ -15,47 +15,44 @@
 \begin{document}
 \maketitle 
 
-The files can be found on \url{https://github.com/iljaGH/CompFin/}.
+The source code can be found at \url{https://github.com/iljaGH/CompFin/}.
 
-\section*{Task 1} Simulating the price of a call-option leads to
-increasing mean value with larger $\sigma$ of the normal distribution. This is
+\section*{Task 1} Estimation of mean and variance of call-option prices with $K=10,S(0)=10,\mu=0.1,T=2,\Delta t=0.2$ and varying $\sigma$. Larger values of $\sigma$ lead to a bigger mean. This is
 due to the price of the call-option
 \begin{eqnarray*}
 V_{call}\left(S,T\right) & = &\max \lbrace S(T)-K,0 \rbrace
 \end{eqnarray*}
 
-always being positive. See task1.cpp and plot for details.
+always being positive. See task1.cpp for code.
 \begin{figure}[!ht]
 \centering
 \includegraphics{task1Plot}
-\caption{Mean-Estimate for the call-option prices for different values of
+\caption{mean estimate for the call-option prices for different values of
 $\sigma$.}
 \label{fig:Task1}
 \end{figure}
 
 
-\section*{Task 2} See task2.cpp for code. As we can see in the sample output below, the variance does not depend on $\Delta t$, since the
-small differences can be caused by the (relatively) small sample size of N=1000
-of the geometric brownian motions.
+\section*{Task 2} Estimation of mean and variance of call-option prices with $K=10,S(0)=10,\mu=0.1,\sigma=0.2,T=2$ and varying $\Delta t$. As we can see in the sample output below, the variance does not depend on $\Delta t$, since the small differences can be caused by the (relatively) small sample size of $N=1000$.
 \begin{lstlisting}[caption = estimated $\mu$ and $\sigma$ for
 different values of $\Delta t$ and N = 1.0E3, captionpos=b, label=lst:Task2] 
-delta t = 2.000e-001 mean = 2.874e+000 variance = 3.811e+000
-delta t = 4.000e-001 mean = 2.727e+000 variance = 3.429e+000
-delta t = 5.000e-001 mean = 3.001e+000 variance = 3.752e+000
-delta t = 1.000e+000 mean = 2.847e+000 variance = 3.747e+000
-delta t = 2.000e+000 mean = 3.214e+000 variance = 3.885e+000
+delta t = 0.2 mean = 2.874 variance = 3.811
+delta t = 0.4 mean = 2.727 variance = 3.429
+delta t = 0.5 mean = 3.001 variance = 3.752
+delta t = 1   mean = 2.847 variance = 3.747
+delta t = 2   mean = 3.214 variance = 3.885
 \end{lstlisting}
 
 \section*{Task 3}
 \begin{eqnarray*}
 \cfrac{1}{\sqrt{2\pi}}\int_{\chi}^{\infty}K\exp\left(-\cfrac{s^2}{2}\right)ds &
 = & \cfrac{1}{\sqrt{2\pi}}\left(\int_{-\infty}^{\infty}K\exp\left(-\cfrac{s^2}{2}\right)ds
-- \int_{\infty}^{\chi}K\exp\left(-\cfrac{s^2}{2}\right)ds \right) \\
+- \int_{-\infty}^{\chi}K\exp\left(-\cfrac{s^2}{2}\right)ds \right) \\
 & = & K\left(1 - \Phi(\chi)\right) = K \Phi(-\chi)
 \end{eqnarray*}
 
 \section*{Task 4}
-See task4.cpp and plot for details. 
+Approximation of the fair price of a call option with $K=10,S(0)=10,\mu=0.1,\sigma=0.2,T=1,\Delta t=1$. See task4.cpp and for code. 
 \begin{figure}[!ht]
 \centering
 \includegraphics{task4Plot}
@@ -99,10 +96,10 @@ and using integration by substitution gives us:
 &\int_{\Phi^{-1}(-\infty)}^{\Phi^{-1}(\infty)}f(\Phi^{-1}(t))\left(\Phi^{-1}\right)'(t)\cfrac{1}{\left(\Phi^{-1}\right)'(t)}ds
 \\
 & = &
-\int_{1}^{0}f(\Phi^{-1}(t))ds
+\int_{0}^{1}f(\Phi^{-1}(t))ds
 \end{eqnarray*}
 
-\section*{Task 6} See task6.cpp for code. There is a relationship: You get the
+\section*{Task 6} See task6.cpp for code. There is a relationship: We get the
 nodes on level $(l+1)$ by taking the nodes on level $l$ and putting a new node
 equidistant between two old nodes and also putting a new node equidistantly
 between $0$ and the first old node, or $1$ and the last old node respectively.
@@ -113,9 +110,9 @@ x_i = \cfrac{1}{N_l+1} = \cfrac{1}{2^l}
 
 \section*{Task 7}
 See task7.cpp for code. We used GSL for Gauss-Legendre quadrature. The nodes for
-the gaussian quadrature of degree $n$ are the roots of a polynomial of degree n
-belonging to a class of orthogonal polynomials.
+the gaussian quadrature are the zeroes of the Legendre polynomials.
 
+\clearpage
 \section*{Task 8} See task8.cpp for code. Yes, there is a relationship: on level
 $l+1$, we have the nodes from level $l$, and inbetween each "old" node we add a
 new node as follows: if on level $l$ we have nodes $x_i,x_{i+1}$ at
@@ -128,9 +125,7 @@ new node as follows: if on level $l$ we have nodes $x_i,x_{i+1}$ at
  N_l$.
 
 \section*{Task 9}
-See task9.cpp,
-task9.plot for implementation. The convergence plot can be found below.
-
+Integration of $f(x)=1+0.1\cdot\exp(0.5\cdot x)$. See task9.cpp for code.
 \begin{figure}[!ht]
 \centering
 \includegraphics{task9Plot}
@@ -139,10 +134,8 @@ task9.plot for implementation. The convergence plot can be found below.
 \end{figure}
 \clearpage
 
-\section*{Task 10} For the values
-$S(0)=10,\mu=0.1,\sigma=0.2,T=2$ and $K=0$ we get an expected value of $\approx
-12.21402758160169833921071994639$, for $K=10$ we get $\approx
-2.6528094900348809449924483895885184345427710615192314$. See task10.cpp for implementation. The convergence plots can be found below.
+\section*{Task 10}
+Integration of $f_{call}\circ \Phi^{-1}=(S(0)\exp((\mu-0.5\cdot\sigma^2)\cdot T+\sigma\sqrt{T}\Phi^{-1}(s))-K)^+$ for a call option with $S(0)=10,\mu=0.1,\sigma=0.2,T=2$ and both $K=0$ and $K=10$. See task10.cpp for implementation.
 
 \begin{figure}[!ht]
 \centering

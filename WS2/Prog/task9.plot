@@ -2,7 +2,7 @@ reset
 set terminal postscript eps color;
 set out '../LaTeX/task9Plot.eps';
 set logscale;
-set xlabel 'num. nodes';
+set xlabel 'N nodes';
 set ylabel 'relative error';
 
 set grid

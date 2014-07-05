@@ -357,15 +357,15 @@ int main(){
 		fileSparse << "#nodes SGCC SGT d="<<d<<"\n";
 		fileProd << "#nodes PGCC PGT d="<<d<<"\n";
 
-		for(int l=1;l<16;l++){
+		for(int l=1;l<15;l++){
 			printf("d=%i level %i\n",d,l);
 			//PRODUCT RULE DAUERT SO LANGE AAAAAAAAAAAAAAAAAH!!!!
 			double prodcc=0,prodtrap=0;
-			if((d==1 && l<10) || (d==2 && l<7) || (d==4 && l<5) || (d==8 && l<3)) {
+			if((d==1) || (d==2 && l<7) || (d==4 && l<5) || (d==8 && l<3)) {
 				prodcc=std::abs(ProductRuleCC(l,d)-expected)/expected;
 				prodtrap=std::abs(ProductRuleTrapezoidal(l,d)-expected)/expected;
 			}
-			if(prodcc!=0)
+			if(prodcc!=0 && prodtrap!=0)
 				fileProd << pow(pow(2,l)-1,d) << " " <<prodcc<< " "<<prodtrap<< "\n";
 
 			file << pow(2,l)-1 << " "<<std::abs(MC(l,d)-expected)/expected<< " "<<std::abs(QMC(l,d)-expected)/expected<< "\n";
@@ -379,6 +379,9 @@ int main(){
 		file.close();
 		fileSparse.close();
 		fileProd.close();
+
+		if(d==1)
+			break;
 	}
 
 

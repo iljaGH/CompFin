@@ -2,12 +2,14 @@ set terminal postscript eps color;
 set out '../../LaTeX/task9_mu.eps';
 set logscale xy;
 set grid
-set ylabel "estimation error";
+set ylabel "relative error";
+set xlabel "N samples"
 plot 'task9_1.dat' using 1:1 title columnheader(1) with lines linecolor rgb "white",'task9_1.dat' using 1:2 with lines title columnheader(2) lt -1 lw 1 lc 1,'task9_2.dat' using 1:2 with lines title columnheader(2) lt -1 lw 1 lc 2, 'task9_3.dat' using 1:2 with lines title columnheader(2) lt -1 lw 1 lc 3, x**(-0.5) title "N^(-0.5)" lt -1 lw 1 lc 0;
 
 set terminal postscript eps color;
 set out '../../LaTeX/task9_sigma_mu.eps';
 set logscale xy;
 set grid
-set ylabel "estimation error";
+set ylabel "relative error";
+set xlabel "N samples";
 plot 'task9_1.dat' using 1:1 title columnheader(1) with lines linecolor rgb "white",'task9_1.dat' using 1:3 with lines title columnheader(2) lt -1 lw 1 lc 1,'task9_2.dat' using 1:3 with lines title columnheader(2) lt -1 lw 1 lc 2, 'task9_3.dat' using 1:3 with lines title columnheader(2) lt -1 lw 1 lc 3, x**(-0.5) title "N^(-0.5)" lt -1 lw 1 lc 0;

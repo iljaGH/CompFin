@@ -33,7 +33,7 @@ double randomwalk(double z[]){
 	double prod=1;
 
 	for(int i=1;i<=M;i++){
-		w[i]=w[i-1]+sqrt(dt)*z[i];
+		w[i]=w[i-1]+sqrt(dt)*z[i-1];
 		s[i]=s[0]*exp((r-0.5*sigma*sigma)*i*dt+sigma*w[i]);
 
 		prod*=s[i];
@@ -417,13 +417,13 @@ double discretegeometricaverage(){
 }
 
 int main(){
-	int maxlevel =6;
+	int maxlevel =7;
 	std::ofstream file;
-	file.open("mc.dat");
+	/*file.open("mc.dat");
 	file << "#nodes | error randomwalk | error brownian bridge\n";
-
+*/
 	double expected=discretegeometricaverage();
-	for(int i=1;i<20;i++){
+	for(int i=1;i<15;i++){
 		rndwlk=1;
 		double res1=exp(-0.1)*MC(i,M);
 		rndwlk=0;

@@ -1,9 +1,13 @@
 set terminal postscript eps color;
 set out '../../LaTeX/task10_w.eps';
 set grid
+set ylabel "Wiener process W(t)";
+set xlabel "time t";
 plot 'task10_t1.dat' using 1:2 with lines title 'delta t=0.5' lt -1 lw 1 lc 0,'task10_t1.dat' using 1:3 with lines title 'delta t=0.5' lt -1 lw 1 lc 1,'task10_t1.dat' using 1:4 with lines title 'delta t=0.5' lt -1 lw 1 lc 2,'task10_t2.dat' using 1:2 with lines title 'delta t=0.01' lt -1 lw 1 lc 3,'task10_t2.dat' using 1:3 with lines title 'delta t=0.01' lt -1 lw 1 lc 4,'task10_t2.dat' using 1:4 with lines title 'delta t=0.01' lt -1 lw 1 lc 5;
 
 set terminal postscript eps color;
 set out '../../LaTeX/task10_s.eps';
 set grid
+set ylabel "asset price S(t)";
+set xlabel "time t";
 plot 'task10_t1.dat' using 1:5 with lines title 'delta t=0.5' lt -1 lw 1 lc 0,'task10_t1.dat' using 1:6 with lines title 'delta t=0.5' lt -1 lw 1 lc 1,'task10_t1.dat' using 1:7 with lines title 'delta t=0.5' lt -1 lw 1 lc 2,'task10_t2.dat' using 1:5 with lines title 'delta t=0.01' lt -1 lw 1 lc 3,'task10_t2.dat' using 1:6 with lines title 'delta t=0.01' lt -1 lw 1 lc 4,'task10_t2.dat' using 1:7 with lines title 'delta t=0.01' lt -1 lw 1 lc 5;

@@ -30,7 +30,7 @@ double randomwalk(double z[]){
 	w[0]=0;
 
 	for(int i=1;i<=M;i++){
-		w[i]=w[i-1]+sqrt(dt)*z[i];
+		w[i]=w[i-1]+sqrt(dt)*z[i-1];
 		s[i]=s[0]*exp((r-0.5*sigma*sigma)*i*dt+sigma*w[i]);
 
 		//down out
@@ -168,7 +168,7 @@ double QMC(int level, int d){
 }
 
 int main(){
-	int maxlevel =16;
+	int maxlevel =17;
 	std::ofstream file;
 
 	file.open("mc_high.dat");
@@ -199,6 +199,8 @@ int main(){
 		rndwlk=0;
 		double res2=exp(-r)*QMC(i,M);
 		printf("%i %f %f\n",i,res1,res2);
+		if(res1!=res1 || res2!=res2)
+			break;
 		file << pow(2,i)-1 << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
 	}
 

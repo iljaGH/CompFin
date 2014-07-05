@@ -8,7 +8,7 @@ set out '../../LaTeX/task16_mc.eps';
 set ylabel "relative error";
 set xlabel "nodes";
 set logscale y;
-plot 'mc.dat' using 1:2 with lines lt -1 lw 2 lc 0 title "Randomwalk", 'mc.dat' using 1:3 with lines lt -1 lw 2 lc 1 title "Brownian Bridge";
+plot 'mc.dat' using 1:2 with lines lt -1 lw 1 lc 0 title "Randomwalk", 'mc.dat' using 1:3 with lines lt -1 lw 1 lc 1 title "Brownian Bridge";
 
 set terminal postscript eps color;
 #set object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb"light-gray" behind
@@ -17,7 +17,7 @@ set out '../../LaTeX/task16_qmc.eps';
 set ylabel "relative error";
 set xlabel "nodes";
 set logscale y;
-plot 'qmc.dat' using 1:2 with lines lt -1 lw 2 lc 0 title "Randomwalk", 'qmc.dat' using 1:3 with lines lt -1 lw 2 lc 1 title "Brownian Bridge";
+plot 'qmc.dat' using 1:2 with lines lt -1 lw 1 lc 0 title "Randomwalk", 'qmc.dat' using 1:3 with lines lt -1 lw 1 lc 1 title "Brownian Bridge";
 
 set terminal postscript eps color;
 #set object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb"light-gray" behind
@@ -26,7 +26,7 @@ set out '../../LaTeX/task16_ccsparse.eps';
 set ylabel "relative error";
 set xlabel "nodes";
 set logscale y;
-plot 'ccsparse.dat' using 1:2 with lines lt -1 lw 2 lc 0 title "Randomwalk", 'ccsparse.dat' using 1:3 with lines lt -1 lw 2 lc 1 title "Brownian Bridge";
+plot 'ccsparse.dat' using 1:2 with lines lt -1 lw 1 lc 0 title "Randomwalk", 'ccsparse.dat' using 1:3 with lines lt -1 lw 1 lc 1 title "Brownian Bridge";
 
 set terminal postscript eps color;
 #set object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb"light-gray" behind
@@ -35,7 +35,7 @@ set out '../../LaTeX/task16_ccprod.eps';
 set ylabel "relative error";
 set xlabel "nodes";
 set logscale y;
-plot 'ccproduct.dat' using 1:2 with lines lt -1 lw 2 lc 0 title "Randomwalk", 'ccproduct.dat' using 1:3 with lines lt -1 lw 2 lc 1 title "Brownian Bridge";
+plot 'ccproduct.dat' using 1:2 with lines lt -1 lw 1 lc 0 title "Randomwalk", 'ccproduct.dat' using 1:3 with lines lt -1 lw 1 lc 1 title "Brownian Bridge";
 
 set terminal postscript eps color;
 #set object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb"light-gray" behind
@@ -44,7 +44,7 @@ set out '../../LaTeX/task16_trapsparse.eps';
 set ylabel "relative error";
 set xlabel "nodes";
 set logscale y;
-plot 'trapsparse.dat' using 1:2 with lines lt -1 lw 2 lc 0 title "Randomwalk", 'trapsparse.dat' using 1:3 with lines lt -1 lw 2 lc 1 title "Brownian Bridge";
+plot 'trapsparse.dat' using 1:2 with lines lt -1 lw 1 lc 0 title "Randomwalk", 'trapsparse.dat' using 1:3 with lines lt -1 lw 1 lc 1 title "Brownian Bridge";
 
 set terminal postscript eps color;
 #set object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb"light-gray" behind
@@ -53,4 +53,15 @@ set out '../../LaTeX/task16_trapprod.eps';
 set ylabel "relative error";
 set xlabel "nodes";
 set logscale y;
-plot 'trapproduct.dat' using 1:2 with lines lt -1 lw 2 lc 0 title "Randomwalk", 'trapproduct.dat' using 1:3 with lines lt -1 lw 2 lc 1 title "Brownian Bridge";
+plot 'trapproduct.dat' using 1:2 with lines lt -1 lw 1 lc 0 title "Randomwalk", 'trapproduct.dat' using 1:3 with lines lt -1 lw 1 lc 1 title "Brownian Bridge";
+
+set terminal postscript eps color;
+#set object 1 rectangle from screen 0,0 to screen 1,1 fillcolor rgb"light-gray" behind
+set out '../../LaTeX/task16.eps';
+#set title "convergence plot for MC rndwlk/BB";
+set ylabel "relative error";
+set xlabel "nodes";
+set logscale y;
+plot 'mc.dat' using 1:2 with lines lt -1 lw 1 lc 0 title " MC R", 'mc.dat' using 1:3 with lines lt -1 lw 1 lc 1 title "MC BB",'qmc.dat' using 1:2 with lines lt -1 lw 1 lc 2 title "QMC R", 'qmc.dat' using 1:3 with lines lt -1 lw 1 lc 3 title " QMC BB",'ccsparse.dat' using 1:2 with lines lt -1 lw 1 lc 4 title "CCSparse R", 'ccsparse.dat' using 1:3 with lines lt -1 lw 1 lc 5 title "CCSparse BB", 'ccproduct.dat' using 1:2 with lines lt -1 lw 1 lc 6 title "CCProd R", 'ccproduct.dat' using 1:3 with lines lt -1 lw 1 lc 7 title "CCProd BB",'trapsparse.dat' using 1:2 with lines lt -1 lw 1 lc 8 title "TSparse R", 'trapsparse.dat' using 1:3 with lines lt -1 lw 1 lc 9 title "TSparse BB", 'trapproduct.dat' using 1:2 with lines lt -1 lw 1 lc 10 title "TProd R", 'trapproduct.dat' using 1:3 with lines lt -1 lw 1 lc 11 title "TProd BB";
+
+

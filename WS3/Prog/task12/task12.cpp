@@ -96,6 +96,11 @@ int main(){
 		printf("%f\n",sumsimplex(6,8));
 	file.close();
 
+	file.open("test.dat");
+	for(int l=1;l<20;l++){
+		file << l << " "<<sumsimplex(l,1)<<" " << pow(pow(2,l)-1,1)<<"\n";
+	}
+
 
 	return 1;
 }

@@ -1,7 +1,7 @@
 set terminal postscript eps color;
 set out '../LaTeX/task4Plot.eps';
-set xlabel 'N';
-set ylabel "approximation to fair value";
+set xlabel 'N paths';
+set ylabel "mean price after N paths";
 set logscale x;
 set logscale y;
 set grid
@@ -9,7 +9,7 @@ plot 'task4_1.dat' using 1:2 with lines title 'run 1' lt -1 lw 1 lc 0, 'task4_2.
 
 set terminal postscript eps color;
 set out '../LaTeX/task4Plot_err.eps';
-set xlabel 'N';
+set xlabel 'N paths';
 set ylabel "relative error";
 set logscale x;
 set logscale y;

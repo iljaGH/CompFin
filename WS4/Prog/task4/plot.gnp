@@ -28,3 +28,13 @@ set out '../../LaTeX/task4_mc_256.eps';
 set ylabel "relative error";
 set xlabel "#nodes";
 plot 'mc_256.dat' using 1:2 with lines title "Randomwalk" lt -1 lw 1 lc 0, 'mc_256.dat' using 1:3 with lines title "Brownian Bridge" lt -1 lw 1 lc 1;
+
+set terminal postscript eps color;
+set out '../../LaTeX/task4_mc.eps';
+#set title "convergence plot for down-out MC rndwlk/BB, M=4";
+set ylabel "relative error";
+set xlabel "#nodes";
+plot 'mc_4.dat' using 1:2 with lines title "M=4 Randomwalk" lt -1 lw 1 lc 0, 'mc_4.dat' using 1:3 with lines title "M=4 Brownian Bridge" lt -1 lw 1 lc 1,'mc_64.dat' using 1:2 with lines title "M=64 Randomwalk" lt -1 lw 1 lc 2, 'mc_64.dat' using 1:3 with lines title "M=64 Brownian Bridge" lt -1 lw 1 lc 3,'mc_256.dat' using 1:2 with lines title "M=256 Randomwalk" lt -1 lw 1 lc 6, 'mc_256.dat' using 1:3 with lines title "M=256 Brownian Bridge" lt -1 lw 1 lc 7,'mc_1024.dat' using 1:2 with lines title "M=1024 Randomwalk" lt -1 lw 1 lc 4, 'mc_1024.dat' using 1:3 with lines title "M=1024 Brownian Bridge" lt -1 lw 1 lc 5;
+
+
+
