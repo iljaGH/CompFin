@@ -44,7 +44,7 @@ int main(){
 	double expected=continuousgeometricaverage(T,S0,K,sigma,r);
 	file << "#M error\n";
 
-	for(int i=0;i<15;i++){
+	for(int i=0;i<19;i++){
 		//printf("%f\n",discretegeometricaverage(T,pow(2,i),S0,K,sigma,r));
 		file << pow(2,i)<<" "<<std::abs(expected-discretegeometricaverage(T,pow(2,i),S0,K,sigma,r))/expected<<"\n";
 	}

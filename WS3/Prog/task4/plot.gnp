@@ -4,5 +4,5 @@ set out '../../LaTeX/task4.eps';
 set grid;
 #set title "convergence plot for discrete geometric average";
 set ylabel "relative error";
-set xlabel "M timesteps";
+set xlabel "timesteps";
 plot 'data.dat' using 1:2 notitle with lines lt -1 lw 1 lc 0;

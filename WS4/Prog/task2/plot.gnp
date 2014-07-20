@@ -5,19 +5,19 @@ set terminal postscript eps color;
 set out '../../LaTeX/task2_mc_high.eps';
 #set title "convergence plot for MC rndwlk/BB";
 set ylabel "relative error";
-set xlabel "#nodes";
+set xlabel "nodes";
 plot 'mc_high.dat' using 1:2 with lines title "Randomwalk" lt -1 lw 1 lc 0, 'mc_high.dat' using 1:3 with lines title "Brownian Bridge" lt -1 lw 1 lc 1;
 
 set terminal postscript eps color;
 set out '../../LaTeX/task2_mc_low.eps';
 #set title "'convergence plot' for MC rndwlk/BB, low precision reference value";
 set ylabel "relative error";
-set xlabel "#nodes";
+set xlabel "nodes";
 plot 'mc_low.dat' using 1:2 with lines title "Randomwalk" lt -1 lw 1 lc 0, 'mc_low.dat' using 1:3 with lines title "Brownian Bridge" lt -1 lw 1 lc 1;
 
 set terminal postscript eps color;
 set out '../../LaTeX/task2_qmc.eps';
 #set title "convergence plot for QMC rndwlk/BB";
 set ylabel "relative error";
-set xlabel "#nodes";
+set xlabel "nodes";
 plot 'qmc.dat' using 1:2 with lines title "Randomwalk" lt -1 lw 1 lc 0, 'qmc.dat' using 1:3 with lines title "Brownian Bridge" lt -1 lw 1 lc 1;

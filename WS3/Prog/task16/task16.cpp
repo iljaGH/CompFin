@@ -423,7 +423,7 @@ int main(){
 	file << "#nodes | error randomwalk | error brownian bridge\n";
 */
 	double expected=discretegeometricaverage();
-	for(int i=1;i<15;i++){
+/*	for(int i=1;i<15;i++){
 		rndwlk=1;
 		double res1=exp(-0.1)*MC(i,M);
 		rndwlk=0;
@@ -447,7 +447,7 @@ int main(){
 		file << pow(2,i)-1 << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
 	}
 
-	file.close();
+	file.close();*/
 
 	file.open("ccsparse.dat");
 	file << "#nodes | error randomwalk | error brownian bridge\n";
@@ -464,7 +464,7 @@ int main(){
 
 	file.close();
 
-	file.open("ccproduct.dat");
+	/*file.open("ccproduct.dat");
 	file << "#nodes | error randomwalk | error brownian bridge\n";
 
 	for(int i=1;i<3;i++){
@@ -505,7 +505,7 @@ int main(){
 		file << pow(pow(2,i)-1,M) << " "<< std::abs(expected-res1)/expected << " "<< std::abs(expected-res2)/expected << "\n";
 	}
 
-	file.close();
+	file.close();*/
 
 	return 1;
 }

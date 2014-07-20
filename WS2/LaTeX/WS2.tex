@@ -18,24 +18,19 @@
 The source code can be found at \url{https://github.com/iljaGH/CompFin/}.
 
 \section*{Task 1} Estimation of mean and variance of call-option prices with $K=10,S(0)=10,\mu=0.1,T=2,\Delta t=0.2$ and varying $\sigma$. Larger values of $\sigma$ lead to a bigger mean. This is
-due to the price of the call-option
-\begin{eqnarray*}
-V_{call}\left(S,T\right) & = &\max \lbrace S(T)-K,0 \rbrace
-\end{eqnarray*}
-
-always being positive. See task1.cpp for code.
+due to the price  $V_{call}\left(S,T\right)= \max \lbrace S(T)-K,0 \rbrace$ of the call-option always being positive. See task1.cpp for code.
 \begin{figure}[!ht]
 \centering
 \includegraphics{task1Plot}
-\caption{mean estimate for the call-option prices for different values of
+\caption{Mean estimate for the call-option prices for different values of
 $\sigma$.}
 \label{fig:Task1}
 \end{figure}
 
 
 \section*{Task 2} Estimation of mean and variance of call-option prices with $K=10,S(0)=10,\mu=0.1,\sigma=0.2,T=2$ and varying $\Delta t$. As we can see in the sample output below, the variance does not depend on $\Delta t$, since the small differences can be caused by the (relatively) small sample size of $N=1000$.
-\begin{lstlisting}[caption = estimated $\mu$ and $\sigma$ for
-different values of $\Delta t$ and N = 1.0E3, captionpos=b, label=lst:Task2] 
+\begin{lstlisting}[caption = Estimated $\mu$ and $\sigma$ for
+different values of $\Delta t$ using 1000 samples, captionpos=b, label=lst:Task2] 
 delta t = 0.2 mean = 2.874 variance = 3.811
 delta t = 0.4 mean = 2.727 variance = 3.429
 delta t = 0.5 mean = 3.001 variance = 3.752
@@ -52,7 +47,7 @@ delta t = 2   mean = 3.214 variance = 3.885
 \end{eqnarray*}
 
 \section*{Task 4}
-Approximation of the fair price of a call option with $K=10,S(0)=10,\mu=0.1,\sigma=0.2,T=1,\Delta t=1$. See task4.cpp and for code. 
+Approximation of the fair price of a call option with $K=10,S(0)=10,\mu=0.1,\sigma=0.2,T=1,\Delta t=1$. Reference value is the solution obtained from the Black-Scholes formula. See task4.cpp for code. 
 \begin{figure}[!ht]
 \centering
 \includegraphics{task4Plot}
@@ -99,22 +94,24 @@ and using integration by substitution gives us:
 \int_{0}^{1}f(\Phi^{-1}(t))ds
 \end{eqnarray*}
 
-\section*{Task 6} See task6.cpp for code. There is a relationship: We get the
+\section*{Task 6} The composite trapezoidal rule has a relationship between levels: We get the
 nodes on level $(l+1)$ by taking the nodes on level $l$ and putting a new node
 equidistant between two old nodes and also putting a new node equidistantly
-between $0$ and the first old node, or $1$ and the last old node respectively.
+between $0$ and the first old node or $1$ and the last old node respectively.
 Nodes positions are:
 \begin{eqnarray*}
 x_i = \cfrac{1}{N_l+1} = \cfrac{1}{2^l}
 \end{eqnarray*}
 
+See task6.cpp for code.
+
 \section*{Task 7}
-See task7.cpp for code. We used GSL for Gauss-Legendre quadrature. The nodes for
-the gaussian quadrature are the zeroes of the Legendre polynomials.
+We used GSL for Gauss-Legendre quadrature. The nodes for
+the Gaussian quadrature are the zeroes of the Legendre polynomials. See task7.cpp for code.
 
 \clearpage
-\section*{Task 8} See task8.cpp for code. Yes, there is a relationship: on level
-$l+1$, we have the nodes from level $l$, and inbetween each "old" node we add a
+\section*{Task 8}The Clenshaw-Curtis rule has a relationship between levels: on level
+$l+1$, we have the nodes from level $l$ and inbetween each "old" node we add a
 new node as follows: if on level $l$ we have nodes $x_i,x_{i+1}$ at
 \[ \dfrac{1}{2}\left(1-\cos\left(\dfrac{\pi i}{N_l+1}\right)\right)\]
  and
@@ -122,25 +119,27 @@ new node as follows: if on level $l$ we have nodes $x_i,x_{i+1}$ at
  respectively, then on level $l+1$ they are node $x_{2i}$ and $x_{2i+2}$ respectively, since
 \[\dfrac{i}{N_l+1}=\dfrac{2i}{N_{l+1}+1}\]
  (for $i+1$ analogously). We basically add nodes  $x_{i+0.5}$ for $0\le i \le
- N_l$.
+ N_l$. 
+ 
+ See task8.cpp for code.
 
 \section*{Task 9}
-Integration of $f(x)=1+0.1\cdot\exp(0.5\cdot x)$. See task9.cpp for code.
+Convergence of integration of $f(x)=1+0.1\exp(0.5x)$ against closed-form solution. See task9.cpp for code.
 \begin{figure}[!ht]
 \centering
 \includegraphics{task9Plot}
-\caption{Convergence plot for integration of $f(x)=1+0.1\cdot\exp(0.5\cdot x)$.}
+\caption{Convergence plot for integration of $f(x)=1+0.1\exp(0.5x)$.}
 \label{fig:Task9}
 \end{figure}
 \clearpage
 
 \section*{Task 10}
-Integration of $f_{call}\circ \Phi^{-1}=(S(0)\exp((\mu-0.5\cdot\sigma^2)\cdot T+\sigma\sqrt{T}\Phi^{-1}(s))-K)^+$ for a call option with $S(0)=10,\mu=0.1,\sigma=0.2,T=2$ and both $K=0$ and $K=10$. See task10.cpp for implementation.
+Integration of $f_{call}\circ \Phi^{-1}=(S(0)\exp((\mu-0.5\sigma^2)T+\sigma\sqrt{T}\Phi^{-1}(s))-K)^+$ for a call option with $S(0)=10,\mu=0.1,\sigma=0.2,T=2$ and both $K=0$ and $K=10$. Reference value obtained by using the Black-Scholes formula. See task10.cpp for code.
 
 \begin{figure}[!ht]
 \centering
 \includegraphics{task10Plot_0}
-\caption{Relative error of different integration methods for
+\caption{Convergence plot for integration of
 $f_{call}\circ \Phi^{-1}$ with $K = 0$.}
 \label{fig:Task10_0}
 \end{figure}
@@ -148,7 +147,7 @@ $f_{call}\circ \Phi^{-1}$ with $K = 0$.}
 \begin{figure}[!ht]
 \centering
 \includegraphics{task10Plot_10}
-\caption{Relative error of different integration methods for
+\caption{Convergence plot for integration of
 $f_{call}\circ \Phi^{-1}$ with $K = 10$.}
 \label{fig:Task10_10}
 \end{figure}

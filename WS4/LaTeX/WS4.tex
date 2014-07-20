@@ -18,37 +18,38 @@
 The source code can be found at \url{https://github.com/iljaGH/CompFin/}.
 
 \section*{Task 1}
-Integrand of 2 dimensional Down-Out Call option $S(0)=10,K=10,B=8,T=1,\sigma=0.2,r=0.05$.\\
+Integrand of 2 dimensional Down-Out call option $S(0)=10,K=10,B=8,T=1,\sigma=0.2,r=0.05$.\\
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=.9\textwidth]{task1.eps}
-\caption{Integrand of 2 dimensional Down-Out Call option $S(0)=10,K=10,B=8,T=1,\sigma=0.2,r=0.05$}
+\caption{Integrand of 2 dimensional Down-Out call option}
 \label{fig:Task1}
 \end{figure}
 \clearpage
 
 
 \section*{Task 2}
-Discrete Down-Out call option with $M=128,S(0)=10,K=10,B=9,T=1,\sigma=0.2,r=0.05$.\\Below are the two convergence plots for MC and QMC respectively. We can see that the Randomwalk path discretization is more suitable for this particular integration problem. The third plot is a pseudo-convergence plot of MC using a low precision reference value (4 significant figures). The plot stabilizes at a higher "error".
+Discrete Down-Out call option with $M=128,S(0)=10,K=10,B=9,T=1,\sigma=0.2,r=0.05$.\\
+Below are the convergence plots for Monte Carlo and Quasi-Monte Carlo respectively using the closed-form solution as a reference value. We can see that the Randomwalk path discretization is more suitable for this particular integration problem. The third plot is a pseudo convergence plot for Monte Carlo using a low precision reference value (4 significant figures). The error is very low for a short time, because we "pass" the low precision reference value during the convergence. Then the error stabilizes at the relative error between the low reference value and the actual limit.
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=.9\textwidth]{task2_mc_high.eps}
-\caption{Monte-Carlo}
+\caption{Convergence plot for Monte Carlo}
 \label{fig:Task2a}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=.9\textwidth]{task2_qmc.eps}
-\caption{Quasi-Monte-Carlo}
+\caption{Convergence plot for Quasi-Monte Carlo}
 \label{fig:Task2b}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=.9\textwidth]{task2_mc_low.eps}
-\caption{Monte-Carlo with low precision reference value (4 significant figures)}
+\caption{Convergence plot for Monte Carlo with low precision reference value (4 significant figures)}
 \label{fig:Task2c}
 \end{figure}
 \clearpage
@@ -58,7 +59,7 @@ Fair price of Down-Out call option with  $S(0)=10,K=10,T=1,\sigma=0.2,r=0.05$ fo
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=.9\textwidth]{task3.eps}
-\caption{fair price of Down-Out call options}
+\caption{Fair price of Down-Out call options, varying barrier}
 \label{fig:Task3}
 \end{figure}
 \clearpage
@@ -69,63 +70,63 @@ Convergence of Down-Out call option with $S(0)=10,K=10,B=9,T=1,\sigma=0.2,r=0.05
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=.9\textwidth]{task4_mc_4.eps}
-\caption{$M=4$}
+\caption{Convergence plot for $M=4$}
 \label{fig:Task4a}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=.9\textwidth]{task4_mc_64.eps}
-\caption{$M=64$}
+\caption{Convergence plot for $M=64$}
 \label{fig:Task4b}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=.9\textwidth]{task4_mc_256.eps}
-\caption{$M=256$}
+\caption{Convergence plot for $M=256$}
 \label{fig:Task4c}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=.9\textwidth]{task4_mc_1024.eps}
-\caption{$M=1024$}
+\caption{Convergence plot for $M=1024$}
 \label{fig:Task4d}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=.9\textwidth]{task4_mc.eps}
-\caption{Comparison}
+\caption{Comparison of all plots above}
 \label{fig:Task4e}
 \end{figure}
 \clearpage
 
 \section*{Task 5}
-Discrete time integrand of a Lookback option with $M=2,S(0)=10,K=10,T=1,\sigma=0.2,r=0.05$.
+Integrand of a discrete time Lookback option with $M=2,S(0)=10,K=10,\\T=1,\sigma=0.2,r=0.05$.
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=.9\textwidth]{task5.eps}
-\caption{discrete time integrand Lookback option $M=2,S(0)=10,K=10,T=1,\sigma=0.2,r=0.05$}
+\caption{Integrand for discrete time Lookback option}
 \label{fig:Task5}
 \end{figure}
 \clearpage
 
 \section*{Task 6}
-Convergence of discrete time Lookback option with $M=128,S(0)=10,K=10,T=1,\sigma=0.2,r=0.05$ using Monte Carlo and Quasi Monte Carlo with Brownian Bridge discretization.
+Convergence of a discrete time Lookback option with $M=128,S(0)=10,K=10,T=1,\sigma=0.2,r=0.05$ using Monte Carlo and Quasi-Monte Carlo with Brownian Bridge discretization against closed-form solution.
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=.9\textwidth]{task6.eps}
-\caption{convergence plot for discrete time Lookback option, parameters $M=128,S(0)=10,K=10,T=1,\sigma=0.2,r=0.05$, Brownian Bridge}
+\caption{Convergence plot for a discrete time Lookback option}
 \label{fig:Task6}
 \end{figure}
 
 \section*{Task 7}
-See task7.cpp for code.
+Implementation of implied volatility. See task7.cpp for code.
 
 \section*{Task 8}
-See task8.cpp for code.
+Implementation of bisection method. See task8.cpp for code.
 \clearpage
 
 \section*{Task 9}
@@ -147,7 +148,7 @@ K & V\\
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=.9\textwidth]{task9.eps}
-\caption{volatility smile, Lufthansa call option}
+\caption{Volatility smile, Lufthansa call option}
 \label{fig:Task9}
 \end{figure}
 

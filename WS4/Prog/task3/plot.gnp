@@ -3,5 +3,5 @@ set out '../../LaTeX/task3.eps';
 set grid;
 #set title "fair price for Down-Out call with S(0)=10, K=10, T=1, sigma=.2,r=.05";
 set ylabel "fair price";
-set xlabel "Barrier";
+set xlabel "barrier";
 plot 'task3.dat' using 1:2 title "Down-Out call";

@@ -5,11 +5,11 @@ set grid;
 set out '../../LaTeX/task3_10.eps';
 #set title "convergence plot for fair value of discrete geometric average option, M=10";
 set ylabel "relative error";
-set xlabel "N samples";
+set xlabel "samples";
 plot 'data10.dat' using 1:2 notitle with lines lt -1 lw 1 lc 0;
 
 set out '../../LaTeX/task3_200.eps';
 #set title "convergence plot for fair value of discrete geometric average option, M=200";
 set ylabel "relative error";
-set xlabel "N samples";
+set xlabel "samples";
 plot 'data200.dat' using 1:2 notitle with lines lt -1 lw 1 lc 0;

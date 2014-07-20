@@ -17,60 +17,58 @@
 The source code can be found at \url{https://github.com/iljaGH/CompFin/}.
 
 \section*{Task 1} The program outputs uniformly distributed random
-numbers between 0 and 1 in two ways, once by the built-in c++-function rand, and
-once using gsl.
+numbers between 0 and 1 in two ways: once by using the C++-function \textit{rand} and
+once using the GSL library.
 
-Removing (double) in the marked line leads to the result being an int (and thus
-either 0 or 1, mostly 0), since dividing an int by an int in c++ gives an int,
-so we have to cast one of the variables to double to force a floating point
-number as the result.
+Removing \textit{(double)} in the marked line leads to the result being of type int and thus
+either 0 or 1, since division of int by int gives int as the result type in C++.
+Thus we have to cast one of the variables to double to force a floating point
+division.\\
 
-There is a direct function for simulating normally distributed random variables:
-double gsl\_ran\_gaussian(const gsl\_rng* r, double sigma), which returns a
-gaussian random variable with mean 0 and variance sigma.
+There is a direct function for simulating normally distributed random variables in GSL.\\
+The function \textit{double gsl\_ran\_gaussian(const gsl\_rng* r, double sigma)} returns a
+Gaussian random variable with mean 0 and variance sigma.
 
 \section*{Task 2}
-For code see WS1T32.cpp.
+Implementation of the rejection sampling algorithm. For code see WS1T32.cpp.
 
-\section*{Task 3} The matlab script plots the data against a unit gaussian
-probability density function. It first creates a histogram of the data, where it
-sorts the numbers into 100 different bins, and then counts the amount of numbers
+\section*{Task 3} The MATLAB script plots the data against a unit Gaussian
+probability density function (PDF). It first creates a histogram of the data, where it
+sorts the numbers into 100 different bins and then counts the amount of numbers
 in each bin. Then it scales the amount of these numbers to show the relative
-amount in each bin and plots it against the unit gaussian probability density
-function.
+amount in each bin and plots it against the unit Gaussian PDF.
 
 The problem in fig. 1 is that $[-2,2]$ is not a good enough bound since the
-integral comes out to $\approx 0.95$, thus we get a lot more variables where
+integral on this interval is $\approx 0.95$. That means we get a lot more variables for which
 $y\le p(x')$ (since it is more likely for an element of $[-2,2]$ then say
-$[-3,3]$ to fullfill that), and thus the simulated density has a higher mean
-than it should be.
+$[-3,3]$ to fullfill the inequality). Thus the simulated density has a higher mean than the correct density function.
 
-\section*{Task 4} We get a normally distributed random variable if we apply the
-inverse of the cdf of the gaussian to the uniform random variable.\\
-Let $U$ be a standard uniform random variable, $F$ the cdf of the gaussian. Then
+\section*{Task 4} We obtain a normally distributed random variable if we apply the
+inverse of the Gaussian cumulative distribution function (CDF) to the uniform random variable.\\
+Let $U$ be a standard uniform random variable, $F$ the Gaussian CDF. Then
 \[P\left[X\le x\right]=P\left[F^{-1}(U) \le x\right]=P\left[U \le
 F(x)\right]=F(x)\]\\
 The second equality holds because F is right-continuous; the third
 equality holds because U is uniform on [0,1]. This proves the claim.
 
-Intuitively this is clear, too: We uniformly choose a number between 0 and 1 and
-interpret that as a proportion of the area under the gaussian curve. Then we
-return the number that has this proportion of the area on the left of it. Thus,
+Intuitively this is clear, too: We uniformly choose a number $U$ between 0 and 1 and
+interpret that as a proportion of the area under the Gaussian PDF. Then we
+return the $x\in\mathbb{R}$ such that the ratio of the integral of the Gaussian PDF from $-\infty$ to $x$ and the full integral is $U$. Thus,
 we are unlikely to choose a number in the tails, since there is little area in
 the tails, so we would have to get pick a number very close to 0, whereas for
-the other areas we have more "room" so we are more likely to get these.
+the other areas the margin is bigger, so we are more likely to return these numbers.
 
 \clearpage
-\section*{Task 5} Firstly, the cdf of the gaussian is pointsymmetric w.r.t. the
-y-intercept, thus we can handle the case $x<0$ by $1-NormalCDF(-x)$. If $x>6$,
-we know that a normally distributed random variable is guaranteed to be smaller,
-thus we return 1. For the other 2 cases: for $0\le x\le 1.87$, its easy to see
-that the term given in the return is very close to the cdf of the gaussian since
-it behaves almost like a polynomial in that area. For the last case the values
-of the cdf are very close to 1, and again like above the given term gives us a
-good approximation of the difference of the cdf's value to 1 in that area.
+\section*{Task 5} Firstly, the Gaussian CDF is pointsymmetric with respect to the
+y-intercept, thus we can handle the case $x<0$ by $1-\mathrm{NormalCDF}(-x)$. If $x>6$,
+we know that a standard normally distributed random variable is guaranteed to be smaller,
+thus we return 1. For $0\le x\le 1.87$ it's easy to see
+that the term given in the return is very close to the Gaussian CDF since
+the CDF behaves almost like a polynomial in that area. For the last case the values
+of the Gaussian CDF are very close to 1 and, again, like above, the term in the code gives us a
+good approximation of the difference of the CDFs value to 1.
 
-\section*{Task 6} For code see WS1T36.cpp.
+\section*{Task 6} Box-Muller method. For code see WS1T36.cpp.
 \begin{figure}[!ht]
 \centering
 \includegraphics{task6}
@@ -89,9 +87,9 @@ Jacobion matrix of the transformation. Plugging both in we get
 We see that $z_1,z_2$ are independent and standard normally distributed.
 
 \clearpage
-\section*{Task 8} The advantage of this algorithm is that it is more precise, we
+\section*{Task 8} The advantage of this algorithm is that it is more precise; we
 don't have a lot of floating point errors. The variable alpha in the algorithm
-is the estimated mean. It is the same as the naive computation because: 
+is the estimated mean. It is the same as the naive computation: 
 \begin{eqnarray}
     \hat{\mu}_n &= &\frac{1}{N}\sum_{i=1}^n x_i\nonumber\\
     &=&\frac{1}{N}\sum_{i=1}^{n-1}x_i+\frac{1}{N}x_n\nonumber\\
@@ -115,9 +113,9 @@ algorithm we have:
 \gamma^2\frac{n-1}{n},\quad \sigma = \sqrt{\frac{\beta}{n-1}} =
 \hat{\sigma}_{n}\]
 
-where $n=i+1$. Obviously $\hat{\mu}_0=x_0$ and $\hat{\sigma}_0 = 0$ so the initialization is
-correct. The computation is correct, too, since in the terms above and, with
-(\ref{eqn:meanAlg}) and (\ref{eqn:varAlg}), we have
+where $n=i+1$. Obviously $\hat{\mu}_0=x_0$ and $\hat{\sigma}_0 = 0$, so the initialization is
+correct. The computation is correct, too, since in the terms above and with
+(\ref{eqn:meanAlg}) and (\ref{eqn:varAlg}), we have:
 \begin{eqnarray*}
       \alpha & = &\alpha+\gamma/(i+1) \\
       & = &\hat{\mu}_{n-1}+(x_n-\hat{\mu}_{n-1})/n \\
@@ -141,34 +139,34 @@ Estimation of mean and variance of a $\mathcal{N}(\mu,\sigma^2)$-distributed var
 \begin{figure}[!ht]
 \centering
 \includegraphics{task9_mu}
-\caption{Estimation of $\mu$}
+\caption{Convergence plot for estimation of $\mu$}
 \label{fig:Task9a}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering
 \includegraphics{task9_sigma_mu}
-\caption{Estimation of $\sigma$ given $\mu$}
+\caption{Convergence plot for estimation of $\sigma$ given $\mu$}
 \label{fig:Task9b}
 \end{figure}
 
 The error is approximately given by $O(N^{-\frac{1}{2}})$.
 
 \newpage
-\section*{Task 10} Simulation of 3 paths of a Wiener process and corresponding asset prices using $S(0)=10,\mu=0.1,\sigma=0.2,T=2$. The paths look more or less the same independent of time discretization, also the mean pricechange is indeed +10\%/year. For code see WS1T510.cpp.\\
+\section*{Task 10} Simulation of 3 paths of a Wiener process and corresponding asset prices using $S(0)=10,\mu=0.1,\sigma=0.2,T=2$. The paths look more or less the same independent of time discretization, also the mean price change is indeed +10\%/year. For code see WS1T510.cpp.\\
 
 
 \begin{figure}[!ht]
 \centering
 \includegraphics{task10_w}
-\caption{3 Wiener processes with parameters $S(0)=10,\mu=0.1,\sigma=0.2,T=2$}
+\caption{Wiener processes with parameters $S(0)=10,\mu=0.1,\sigma=0.2,T=2$}
 \label{fig:Task10a}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering
 \includegraphics{task10_s}
-\caption{corresponding asset prices}
+\caption{Corresponding asset prices}
 \label{fig:Task10b}
 \end{figure}
 \clearpage

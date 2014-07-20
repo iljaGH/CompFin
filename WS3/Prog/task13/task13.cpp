@@ -345,6 +345,8 @@ int main(){
 	int maxlevel=10;
 
 	for(int d=1;d<=8;d*=2){
+		if(d<8)
+			continue;
 		switch(d){
 			case 1: file.open("d1.dat");fileSparse.open("d1S.dat");fileProd.open("d1P.dat");break;
 			case 2: file.open("d2.dat");fileSparse.open("d2S.dat");fileProd.open("d2P.dat");break;
